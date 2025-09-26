@@ -30,6 +30,12 @@
             <h2 class="font-semibold text-blue-900">📝 Layanan SKHPN</h2>
         </a>
 
+        <!-- PPID -->
+        <a href="/ppid-informasi"
+           class="p-6 bg-white rounded-2xl shadow-md hover:shadow-lg hover:bg-blue-50 transition text-center">
+            <h2 class="font-semibold text-blue-900">📜 Permohonan Informasi (PPID)</h2>
+        </a>
+
         <!-- Rehabilitasi -->
         <a href="{{ route('form.rehabilitasi') }}"
            class="p-6 bg-white rounded-2xl shadow-md hover:shadow-lg hover:bg-blue-50 transition text-center">

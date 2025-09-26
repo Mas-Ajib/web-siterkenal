@@ -27,48 +27,30 @@ class PPIDForm extends Component
         'cara_mengirim' => 'required|string'
     ];
 
-    protected $messages = [
-        'nama_pemohon.required' => 'Nama pemohon informasi harus diisi.',
-        'alamat.required' => 'Alamat harus diisi.',
-        'nomor_handphone.required' => 'Nomor handphone harus diisi.',
-        'email.required' => 'Email harus diisi.',
-        'email.email' => 'Format email tidak valid.',
-        'informasi_dibutuhkan.required' => 'Informasi yang dibutuhkan harus diisi.',
-        'informasi_dibutuhkan.min' => 'Informasi yang dibutuhkan minimal 10 karakter.',
-        'alasan_meminta.required' => 'Alasan meminta informasi harus diisi.',
-        'alasan_meminta.min' => 'Alasan meminta informasi minimal 10 karakter.',
-        'cara_memperoleh.required' => 'Cara memperoleh informasi harus dipilih.',
-        'cara_mengirim.required' => 'Cara mengirim informasi harus dipilih.'
-    ];
-
     public function submit()
     {
         $this->validate();
 
-        try {
-            PPIDRequest::create([
-                'nama_pemohon' => $this->nama_pemohon,
-                'alamat' => $this->alamat,
-                'nomor_handphone' => $this->nomor_handphone,
-                'email' => $this->email,
-                'informasi_dibutuhkan' => $this->informasi_dibutuhkan,
-                'alasan_meminta' => $this->alasan_meminta,
-                'cara_memperoleh' => $this->cara_memperoleh,
-                'cara_mengirim' => $this->cara_mengirim
-            ]);
+        PPIDRequest::create([
+            'nama_pemohon' => $this->nama_pemohon,
+            'alamat' => $this->alamat,
+            'nomor_handphone' => $this->nomor_handphone,
+            'email' => $this->email,
+            'informasi_dibutuhkan' => $this->informasi_dibutuhkan,
+            'alasan_meminta' => $this->alasan_meminta,
+            'cara_memperoleh' => $this->cara_memperoleh,
+            'cara_mengirim' => $this->cara_mengirim,
+        ]);
 
-            // Reset form
-            $this->reset();
-            
-            session()->flash('message', 'Permohonan informasi PPID berhasil dikirim. Permohonan Anda akan diproses dalam waktu 10 hari kerja.');
-            
-        } catch (\Exception $e) {
-            session()->flash('error', 'Terjadi kesalahan saat mengirim permohonan: ' . $e->getMessage());
-        }
+        $this->reset();
+
+        session()->flash('success', 'Permohonan informasi PPID berhasil dikirim. Akan diproses dalam 10 hari kerja.');
+
     }
-
     public function render()
     {
-        return view('livewire.pengaduan.ppid-form');
+        return view('livewire.form-ppid-informasi')
+            ->layout('layouts.app')
+            ->section('content');
     }
 }

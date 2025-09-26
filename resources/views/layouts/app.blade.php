@@ -47,7 +47,7 @@
                         <a href="/skhpn" class="block px-4 py-2 hover:bg-gray-100">SKHPN</a>
                         <a href="/rehabilitasi" class="block px-4 py-2 hover:bg-gray-100">Rehabilitasi</a>
                         <a href="/kegiatan" class="block px-4 py-2 hover:bg-gray-100">Kegiatan</a>
-                        <a href="/informasi" class="block px-4 py-2 hover:bg-gray-100">Informasi</a>
+                        <a href="/ppid-informasi" class="block px-4 py-2 hover:bg-gray-100">PPID</a>
                         <a href="/pengaduan" class="block px-4 py-2 hover:bg-gray-100">Pengaduan</a>
                     </div>
                 </div>

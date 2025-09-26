@@ -1,6 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PublicFormController;
+use App\Livewire\FormSkhpn;
+use App\Livewire\FormRehabilitasi;
+use App\Livewire\FormKegiatan;
+
+use App\Livewire\PPIDForm;
+
 
 Route::get('/', function () {
     return view('beranda');
@@ -16,16 +23,8 @@ Route::view('profile', 'profile')
 
 require __DIR__.'/auth.php';
 
-use App\Http\Controllers\PublicFormController;
-use App\Livewire\FormSkhpn;
-use App\Livewire\FormRehabilitasi;
-use App\Livewire\FormKegiatan;
-use App\Livewire\FormPpidInformasi;
-use App\Livewire\FormPermohonanKegiatan;
-use App\Livewire\FormKegiatanSosialisasi;
-use App\Livewire\FormKegiatanTesUrine;
-use App\Livewire\FormKegiatanMagang;
-use App\Livewire\FormKegiatanTat;
+
+
 
 // Form layanan publik
 
@@ -44,7 +43,6 @@ Route::post('/pengaduan', [PublicFormController::class, 'submitPengaduan'])->nam
 Route::get('/skhpn', FormSkhpn::class)->name('form.skhpn');
 Route::get('/rehabilitasi', FormRehabilitasi::class)->name('form.rehabilitasi');
 Route::get('/kegiatan', FormKegiatan::class)->name('form.kegiatan');
-Route::get('/form-ppid-informasi', FormPpidInformasi::class)->name('form.ppid');
 
 
 Route::get('/rehabilitasi/konfirmasi', function () {
@@ -118,3 +116,11 @@ Route::get('/pengaduan/kritik-saran', function () {
 Route::get('/tentang', function () {
     return view('tentang');
 })->name('tentang');
+
+// Route untuk PPID 
+Route::get('/ppid', PPIDForm::class)->name('ppid');
+
+Route::get('/ppid-informasi', function () {
+    return view('ppid-informasi');
+});
+

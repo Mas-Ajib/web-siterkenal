@@ -30,8 +30,6 @@ class FormMagang extends Component
             $data['lampiran'] = $this->lampiran->store('lampiran/magang', 'public');
         }
 
-        // TODO: Simpan ke database ketika tabel & model sudah siap.
-        // Contoh:
         // \App\Models\Magang::create($data);
 
         session()->flash('success', 'Permohonan magang/riset berhasil dikirim.');
