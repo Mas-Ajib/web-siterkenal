@@ -124,3 +124,19 @@ Route::get('/ppid-informasi', function () {
     return view('ppid-informasi');
 });
 
+//Admin Login
+
+use App\Http\Livewire\Admin\Dashboard;
+use App\Http\Livewire\Admin\PPIDRequestsIndex;
+use App\Http\Livewire\Admin\AdminUsers;
+use App\Http\Livewire\Admin\Profile;
+
+//
+// Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(function () {
+//     Route::get('/', Dashboard::class)->name('dashboard');
+//     Route::get('/ppid-requests', PPIDRequestsIndex::class)->name('ppid.requests');
+//     Route::get('/users', AdminUsers::class)->name('users');
+//     Route::get('/profile', Profile::class)->name('profile');
+// });
+
+ 

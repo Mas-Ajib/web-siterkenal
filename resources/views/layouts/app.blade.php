@@ -18,6 +18,7 @@
             font-family: 'Montserrat', sans-serif;
         }
     </style>
+    <link rel="icon" href="{{ asset('icon.png') }}">
 </head>
 <body class="bg-gradient-to-r from-blue-900 to-blue-500 text-slate-800">
     
