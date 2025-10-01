@@ -5,7 +5,6 @@ use App\Http\Controllers\PublicFormController;
 use App\Livewire\FormSkhpn;
 use App\Livewire\FormRehabilitasi;
 use App\Livewire\FormKegiatan;
-
 use App\Livewire\PPIDForm;
 
 
@@ -13,15 +12,15 @@ Route::get('/', function () {
     return view('beranda');
 })->name('beranda');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+// Route::view('dashboard', 'dashboard')
+//     ->middleware(['auth', 'verified'])
+//     ->name('dashboard');
 
-Route::view('profile', 'profile')
-    ->middleware(['auth'])
-    ->name('profile');
+// Route::view('profile', 'profile')
+//     ->middleware(['auth'])
+//     ->name('profile');
 
-require __DIR__.'/auth.php';
+// require __DIR__.'/auth.php';
 
 
 
@@ -126,10 +125,10 @@ Route::get('/ppid-informasi', function () {
 
 //Admin Login
 
-use App\Http\Livewire\Admin\Dashboard;
-use App\Http\Livewire\Admin\PPIDRequestsIndex;
-use App\Http\Livewire\Admin\AdminUsers;
-use App\Http\Livewire\Admin\Profile;
+// use App\Http\Livewire\Admin\Dashboard;
+// use App\Http\Livewire\Admin\PPIDRequestsIndex;
+// use App\Http\Livewire\Admin\AdminUsers;
+// use App\Http\Livewire\Admin\Profile;
 
 //
 // Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(function () {

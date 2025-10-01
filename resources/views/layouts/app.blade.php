@@ -54,7 +54,7 @@
                 </div>
 
                 <!-- Login -->
-                <a href="/login" class="bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-800 transition">
+                <a href="/admin/login" class="bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-800 transition">
                     Login
                 </a>
             </nav>
@@ -90,7 +90,7 @@
                 </div>
             </div>
 
-            <a href="/login" class="block bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-800 transition text-center">
+            <a href="/admin/login" class="block bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-800 transition text-center">
                 Login
             </a>
         </nav>

@@ -1,5 +1,5 @@
-// app/Http/Middleware/AdminMiddleware.php
 <?php
+// app/Http/Middleware/AdminMiddleware.php
 
 namespace App\Http\Middleware;
 
@@ -10,17 +10,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
     public function handle(Request $request, Closure $next): Response
     {
+        // Cek apakah user sudah login sebagai admin
         if (!Auth::guard('admin')->check()) {
+            // Jika belum login, redirect ke halaman login
             return redirect()->route('admin.login');
         }
 
+        // Jika sudah login, lanjutkan request
         return $next($request);
     }
 }
