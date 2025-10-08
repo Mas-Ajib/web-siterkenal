@@ -157,6 +157,21 @@
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
+
+                <!-- Pernyataan -->
+                <div class="md:col-span-2">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="pernyataan" name="pernyataan" value="1"
+                               {{ old('pernyataan', $item->pernyataan) ? 'checked' : '' }}
+                               class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                        <label for="pernyataan" class="ml-2 text-sm font-medium text-gray-700">
+                            Saya menyatakan bahwa informasi yang saya berikan adalah benar *
+                        </label>
+                    </div>
+                    @error('pernyataan')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
             </div>
 
             <div class="mt-8 pt-6 border-t border-gray-200 flex justify-end space-x-3">

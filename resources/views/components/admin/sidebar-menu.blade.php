@@ -75,16 +75,16 @@
                class="block px-8 py-2 text-sm text-gray-200 hover:bg-blue-700 hover:text-white transition duration-150 {{ request()->routeIs('admin.layanan.pengaduan.gratifikasi') ? 'bg-blue-700' : '' }}">
                 Pelaporan Gratifikasi
             </a>
-            <a href="{{ route('admin.layanan.pengaduan.whistleblower') }}" 
-               class="block px-8 py-2 text-sm text-gray-200 hover:bg-blue-700 hover:text-white transition duration-150 {{ request()->routeIs('admin.layanan.pengaduan.whistleblower') ? 'bg-blue-700' : '' }}">
+            <a href="{{ route('admin.layanan.pengaduan.whistleblowing') }}" 
+               class="block px-8 py-2 text-sm text-gray-200 hover:bg-blue-700 hover:text-white transition duration-150 {{ request()->routeIs('admin.layanan.pengaduan.whistleblowing') ? 'bg-blue-700' : '' }}">
                 Whistle Blowing System
             </a>
             <a href="{{ route('admin.layanan.pengaduan.narkoba') }}" 
                class="block px-8 py-2 text-sm text-gray-200 hover:bg-blue-700 hover:text-white transition duration-150 {{ request()->routeIs('admin.layanan.pengaduan.narkoba') ? 'bg-blue-700' : '' }}">
                 Pelaporan Penyalahgunaan Narkoba
             </a>
-            <a href="{{ route('admin.layanan.pengaduan.kritik-saran') }}" 
-               class="block px-8 py-2 text-sm text-gray-200 hover:bg-blue-700 hover:text-white transition duration-150 {{ request()->routeIs('admin.layanan.pengaduan.kritik-saran') ? 'bg-blue-700' : '' }}">
+            <a href="{{ route('admin.layanan.pengaduan.kritiksaran') }}" 
+               class="block px-8 py-2 text-sm text-gray-200 hover:bg-blue-700 hover:text-white transition duration-150 {{ request()->routeIs('admin.layanan.pengaduan.kritiksaran') ? 'bg-blue-700' : '' }}">
                 Kritik, Saran dan Pengaduan Layanan
             </a>
         </div>

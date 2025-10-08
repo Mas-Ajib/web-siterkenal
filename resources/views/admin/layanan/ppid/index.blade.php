@@ -144,7 +144,5 @@
             </tbody>
         </table>
     </div>
-    
-    <!-- HAPUS bagian pagination karena kita pakai Collection, bukan Paginator -->
 </div>
 @endsection

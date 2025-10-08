@@ -1,12 +1,16 @@
+<!-- resources/views/admin/layanan/kegiatan/tes-urine.blade.php -->
 @extends('layouts.admin')
 
-@section('title', 'Kegiatan Sosialisasi')
+@section('title', 'Tes Urine Mandiri')
 
 @section('content')
 <div class="mb-6 flex justify-between items-center">
-    <h1 class="text-2xl font-bold text-gray-900">Kegiatan Sosialisasi</h1>
+    <h1 class="text-2xl font-bold text-gray-900">Tes Urine Mandiri</h1>
     <div class="flex space-x-3">
-        <!-- HAPUS Export dulu, nanti tambahkan setelah route export dibuat -->
+        <a href="{{ url('/admin/layanan/kegiatan/tes-urine/export') }}" 
+           class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-150">
+            <i class="fas fa-file-excel mr-2"></i>Export Excel
+        </a>
     </div>
 </div>
 
@@ -15,10 +19,10 @@
     <div class="bg-white rounded-lg shadow p-6">
         <div class="flex items-center">
             <div class="p-3 bg-blue-100 rounded-lg">
-                <i class="fas fa-calendar-alt text-blue-600 text-xl"></i>
+                <i class="fas fa-flask text-blue-600 text-xl"></i>
             </div>
             <div class="ml-4">
-                <h3 class="text-sm font-medium text-gray-500">Total Kegiatan</h3>
+                <h3 class="text-sm font-medium text-gray-500">Total Tes</h3>
                 <p class="text-2xl font-semibold text-gray-900">{{ $stats['total'] }}</p>
             </div>
         </div>
@@ -27,11 +31,11 @@
     <div class="bg-white rounded-lg shadow p-6">
         <div class="flex items-center">
             <div class="p-3 bg-green-100 rounded-lg">
-                <i class="fas fa-calendar-check text-green-600 text-xl"></i>
+                <i class="fas fa-users text-green-600 text-xl"></i>
             </div>
             <div class="ml-4">
-                <h3 class="text-sm font-medium text-gray-500">Bulan Ini</h3>
-                <p class="text-2xl font-semibold text-gray-900">{{ $stats['bulan_ini'] }}</p>
+                <h3 class="text-sm font-medium text-gray-500">Total Peserta</h3>
+                <p class="text-2xl font-semibold text-gray-900">{{ $stats['total_peserta'] }}</p>
             </div>
         </div>
     </div>
@@ -39,11 +43,11 @@
     <div class="bg-white rounded-lg shadow p-6">
         <div class="flex items-center">
             <div class="p-3 bg-purple-100 rounded-lg">
-                <i class="fas fa-users text-purple-600 text-xl"></i>
+                <i class="fas fa-calendar-check text-purple-600 text-xl"></i>
             </div>
             <div class="ml-4">
-                <h3 class="text-sm font-medium text-gray-500">Total Peserta</h3>
-                <p class="text-2xl font-semibold text-gray-900">{{ $stats['total_peserta'] }}</p>
+                <h3 class="text-sm font-medium text-gray-500">Bulan Ini</h3>
+                <p class="text-2xl font-semibold text-gray-900">{{ $stats['bulan_ini'] }}</p>
             </div>
         </div>
     </div>
@@ -61,11 +65,31 @@
     </div>
 </div>
 
+<!-- Stats Jenis Tes -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+    <div class="bg-white rounded-lg shadow p-4 text-center">
+        <div class="text-2xl font-bold text-blue-600">{{ $stats['masyarakat'] }}</div>
+        <div class="text-sm text-gray-500">Masyarakat</div>
+    </div>
+    <div class="bg-white rounded-lg shadow p-4 text-center">
+        <div class="text-2xl font-bold text-green-600">{{ $stats['pemerintah'] }}</div>
+        <div class="text-sm text-gray-500">Pemerintah</div>
+    </div>
+    <div class="bg-white rounded-lg shadow p-4 text-center">
+        <div class="text-2xl font-bold text-purple-600">{{ $stats['swasta'] }}</div>
+        <div class="text-sm text-gray-500">Swasta</div>
+    </div>
+    <div class="bg-white rounded-lg shadow p-4 text-center">
+        <div class="text-2xl font-bold text-orange-600">{{ $stats['pendidikan'] }}</div>
+        <div class="text-sm text-gray-500">Pendidikan</div>
+    </div>
+</div>
+
 <!-- Data Table -->
 <div class="bg-white rounded-lg shadow">
     <div class="px-6 py-4 border-b border-gray-200">
         <div class="flex justify-between items-center">
-            <h3 class="text-lg font-semibold text-gray-900">Data Kegiatan Sosialisasi</h3>
+            <h3 class="text-lg font-semibold text-gray-900">Data Tes Urine Mandiri</h3>
             <span class="text-sm text-gray-500">{{ $data->count() }} data ditemukan</span>
         </div>
     </div>
@@ -74,7 +98,7 @@
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jenis Sosialisasi</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jenis Tes</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Penyelenggara</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal & Waktu</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tempat</th>
@@ -86,8 +110,14 @@
             <tbody class="bg-white divide-y divide-gray-200">
                 @forelse($data as $item)
                 <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {{ $item->jenis_sosialisasi }}
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 py-1 text-xs font-semibold rounded-full 
+                            @if($item->jenis_tes == 'Masyarakat') bg-blue-100 text-blue-800
+                            @elseif($item->jenis_tes == 'Pemerintah') bg-green-100 text-green-800
+                            @elseif($item->jenis_tes == 'Swasta') bg-purple-100 text-purple-800
+                            @else bg-orange-100 text-orange-800 @endif">
+                            {{ $item->jenis_tes_text }}
+                        </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {{ $item->nama_penyelenggara }}
@@ -101,7 +131,7 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         <div>{{ $item->nama_penanggung_jawab }}</div>
-                        <div class="text-xs text-gray-400">{{ $item->no_hp_penanggung_jawab }}</div>
+                        <div class="text-xs text-gray-400">{{ $item->nohp_penanggung_jawab }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-semibold">
@@ -109,11 +139,11 @@
                         </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <a href="{{ url('/admin/layanan/kegiatan/sosialisasi/' . $item->id . '/edit') }}" 
+                        <a href="{{ url('/admin/layanan/kegiatan/tes-urine/' . $item->id . '/edit') }}" 
                            class="text-blue-600 hover:text-blue-900 mr-3">
                            <i class="fas fa-edit mr-1"></i>Edit
                         </a>
-                        <form action="{{ url('/admin/layanan/kegiatan/sosialisasi/' . $item->id) }}" method="POST" class="inline">
+                        <form action="{{ url('/admin/layanan/kegiatan/tes-urine/' . $item->id) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" 
@@ -127,7 +157,7 @@
                 @empty
                 <tr>
                     <td colspan="7" class="px-6 py-4 text-center text-sm text-gray-500">
-                        <i class="fas fa-inbox mr-2"></i>Tidak ada data sosialisasi.
+                        <i class="fas fa-inbox mr-2"></i>Tidak ada data tes urine mandiri.
                     </td>
                 </tr>
                 @endforelse

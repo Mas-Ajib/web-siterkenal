@@ -1,10 +1,11 @@
+<!-- resources/views/admin/layanan/kegiatan/tes-urine-edit.blade.php -->
 @extends('layouts.admin')
 
-@section('title', 'Edit Data Sosialisasi')
+@section('title', 'Edit Tes Urine Mandiri')
 
 @section('content')
 <div class="mb-6">
-    <a href="{{ url('/admin/layanan/kegiatan/sosialisasi') }}" 
+    <a href="{{ url('/admin/layanan/kegiatan/tes-urine') }}" 
        class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition duration-150">
         <i class="fas fa-arrow-left mr-2"></i>Kembali
     </a>
@@ -12,23 +13,27 @@
 
 <div class="bg-white rounded-lg shadow">
     <div class="px-6 py-4 border-b border-gray-200">
-        <h3 class="text-lg font-semibold text-gray-900">Edit Data Sosialisasi</h3>
+        <h3 class="text-lg font-semibold text-gray-900">Edit Data Tes Urine Mandiri</h3>
     </div>
     
     <div class="p-6">
-        <form action="{{ url('/admin/layanan/kegiatan/sosialisasi/' . $item->id) }}" method="POST">
+        <form action="{{ url('/admin/layanan/kegiatan/tes-urine/' . $item->id) }}" method="POST">
             @csrf
             @method('PUT')
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Jenis Sosialisasi -->
+                <!-- Jenis Tes -->
                 <div>
-                    <label for="jenis_sosialisasi" class="block text-sm font-medium text-gray-700 mb-2">Jenis Sosialisasi</label>
-                    <input type="text" id="jenis_sosialisasi" name="jenis_sosialisasi" 
-                           value="{{ old('jenis_sosialisasi', $item->jenis_sosialisasi) }}"
-                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                           required>
-                    @error('jenis_sosialisasi')
+                    <label for="jenis_tes" class="block text-sm font-medium text-gray-700 mb-2">Jenis Tes</label>
+                    <select id="jenis_tes" name="jenis_tes" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required>
+                        <option value="Masyarakat" {{ $item->jenis_tes == 'Masyarakat' ? 'selected' : '' }}>Masyarakat Umum</option>
+                        <option value="Pemerintah" {{ $item->jenis_tes == 'Pemerintah' ? 'selected' : '' }}>Instansi Pemerintah</option>
+                        <option value="Swasta" {{ $item->jenis_tes == 'Swasta' ? 'selected' : '' }}>Perusahaan Swasta</option>
+                        <option value="Pendidikan" {{ $item->jenis_tes == 'Pendidikan' ? 'selected' : '' }}>Lembaga Pendidikan</option>
+                    </select>
+                    @error('jenis_tes')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
@@ -95,12 +100,12 @@
 
                 <!-- No HP Penanggung Jawab -->
                 <div>
-                    <label for="no_hp_penanggung_jawab" class="block text-sm font-medium text-gray-700 mb-2">No HP Penanggung Jawab</label>
-                    <input type="text" id="no_hp_penanggung_jawab" name="no_hp_penanggung_jawab" 
-                           value="{{ old('no_hp_penanggung_jawab', $item->no_hp_penanggung_jawab) }}"
+                    <label for="nohp_penanggung_jawab" class="block text-sm font-medium text-gray-700 mb-2">No HP Penanggung Jawab</label>
+                    <input type="text" id="nohp_penanggung_jawab" name="nohp_penanggung_jawab" 
+                           value="{{ old('nohp_penanggung_jawab', $item->nohp_penanggung_jawab) }}"
                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                            required>
-                    @error('no_hp_penanggung_jawab')
+                    @error('nohp_penanggung_jawab')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
@@ -130,7 +135,7 @@
             </div>
 
             <div class="mt-6 flex justify-end space-x-3">
-                <a href="{{ url('/admin/layanan/kegiatan/sosialisasi') }}" 
+                <a href="{{ url('/admin/layanan/kegiatan/tes-urine') }}" 
                    class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition duration-150">
                     Batal
                 </a>

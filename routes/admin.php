@@ -56,20 +56,65 @@ Route::middleware('auth:admin')->group(function () {
     });
 
     // Layanan Kegiatan
-    Route::prefix('layanan/kegiatan')->name('layanan.kegiatan.')->group(function () {
-        Route::get('/sosialisasi', [LayananKegiatanController::class, 'sosialisasi'])->name('sosialisasi');
-        Route::get('/magang', [LayananKegiatanController::class, 'magang'])->name('magang');
-        Route::get('/tes-urine', [LayananKegiatanController::class, 'tesUrine'])->name('tes-urine');
-        Route::get('/tat', [LayananKegiatanController::class, 'tat'])->name('tat');
-    });
+Route::prefix('layanan/kegiatan')->name('layanan.kegiatan.')->group(function () {
+    // Sosialisasi
+    Route::get('/sosialisasi', [LayananKegiatanController::class, 'sosialisasi'])->name('sosialisasi');
+    Route::get('/sosialisasi/{id}/edit', [LayananKegiatanController::class, 'editSosialisasi'])->name('sosialisasi.edit');
+    Route::put('/sosialisasi/{id}', [LayananKegiatanController::class, 'updateSosialisasi'])->name('sosialisasi.update');
+    Route::delete('/sosialisasi/{id}', [LayananKegiatanController::class, 'destroySosialisasi'])->name('sosialisasi.destroy');
+    
+    // Tes Urine Mandiri
+    Route::get('/tes-urine', [LayananKegiatanController::class, 'tesUrine'])->name('tes-urine');
+    Route::get('/tes-urine/{id}/edit', [LayananKegiatanController::class, 'editTesUrine'])->name('tes-urine.edit');
+    Route::put('/tes-urine/{id}', [LayananKegiatanController::class, 'updateTesUrine'])->name('tes-urine.update');
+    Route::delete('/tes-urine/{id}', [LayananKegiatanController::class, 'destroyTesUrine'])->name('tes-urine.destroy');
+    Route::get('/tes-urine/export', [LayananKegiatanController::class, 'exportTesUrine'])->name('tes-urine.export');
+    
+    // TAT
+    Route::get('/tat', [LayananKegiatanController::class, 'tat'])->name('tat');
+    Route::get('/tat/{id}/edit', [LayananKegiatanController::class, 'editTat'])->name('tat.edit');
+    Route::put('/tat/{id}', [LayananKegiatanController::class, 'updateTat'])->name('tat.update');
+    Route::delete('/tat/{id}', [LayananKegiatanController::class, 'destroyTat'])->name('tat.destroy');
+    Route::get('/tat/export', [LayananKegiatanController::class, 'exportTat'])->name('tat.export');
+    
+    // Magang
+    Route::get('/magang', [LayananKegiatanController::class, 'magang'])->name('magang');
+    Route::get('/magang/{id}/edit', [LayananKegiatanController::class, 'editMagang'])->name('magang.edit');
+    Route::put('/magang/{id}', [LayananKegiatanController::class, 'updateMagang'])->name('magang.update');
+    Route::delete('/magang/{id}', [LayananKegiatanController::class, 'destroyMagang'])->name('magang.destroy');
+    Route::get('/magang/export', [LayananKegiatanController::class, 'exportMagang'])->name('magang.export');
+});
+    // routes/web.php
 
-    // Layanan Pengaduan
-    Route::prefix('layanan/pengaduan')->name('layanan.pengaduan.')->group(function () {
-        Route::get('/gratifikasi', [LayananPengaduanController::class, 'gratifikasi'])->name('gratifikasi');
-        Route::get('/whistleblower', [LayananPengaduanController::class, 'whistleblower'])->name('whistleblower');
-        Route::get('/narkoba', [LayananPengaduanController::class, 'narkoba'])->name('narkoba');
-        Route::get('/kritik-saran', [LayananPengaduanController::class, 'kritikSaran'])->name('kritik-saran');
-    });
+Route::prefix('layanan/pengaduan')->name('layanan.pengaduan.')->group(function () {
+    // Gratifikasi
+    Route::get('/gratifikasi', [LayananPengaduanController::class, 'gratifikasi'])->name('gratifikasi');
+    Route::get('/gratifikasi/{id}/edit', [LayananPengaduanController::class, 'editGratifikasi'])->name('gratifikasi.edit');
+    Route::put('/gratifikasi/{id}', [LayananPengaduanController::class, 'updateGratifikasi'])->name('gratifikasi.update');
+    Route::delete('/gratifikasi/{id}', [LayananPengaduanController::class, 'destroyGratifikasi'])->name('gratifikasi.destroy');
+    Route::get('/gratifikasi/export/excel', [LayananPengaduanController::class, 'exportGratifikasi'])->name('gratifikasi.export');
+
+    // Whistleblowing
+    Route::get('/whistleblowing', [LayananPengaduanController::class, 'whistleblowing'])->name('whistleblowing');
+    Route::get('/whistleblowing/{id}/edit', [LayananPengaduanController::class, 'editWhistleblowing'])->name('whistleblowing.edit');
+    Route::put('/whistleblowing/{id}', [LayananPengaduanController::class, 'updateWhistleblowing'])->name('whistleblowing.update');
+    Route::delete('/whistleblowing/{id}', [LayananPengaduanController::class, 'destroyWhistleblowing'])->name('whistleblowing.destroy');
+    Route::get('/whistleblowing/export/excel', [LayananPengaduanController::class, 'exportWhistleblowing'])->name('whistleblowing.export');
+
+    // Narkoba
+    Route::get('/narkoba', [LayananPengaduanController::class, 'narkoba'])->name('narkoba');
+    Route::get('/narkoba/{id}/edit', [LayananPengaduanController::class, 'editNarkoba'])->name('narkoba.edit');
+    Route::put('/narkoba/{id}', [LayananPengaduanController::class, 'updateNarkoba'])->name('narkoba.update');
+    Route::delete('/narkoba/{id}', [LayananPengaduanController::class, 'destroyNarkoba'])->name('narkoba.destroy');
+    Route::get('/narkoba/export/excel', [LayananPengaduanController::class, 'exportNarkoba'])->name('narkoba.export');
+
+    // Kritik Saran
+    Route::get('/kritiksaran', [LayananPengaduanController::class, 'kritiksaran'])->name('kritiksaran');
+    Route::get('/kritiksaran/{id}/edit', [LayananPengaduanController::class, 'editKritiksaran'])->name('kritiksaran.edit');
+    Route::put('/kritiksaran/{id}', [LayananPengaduanController::class, 'updateKritiksaran'])->name('kritiksaran.update');
+    Route::delete('/kritiksaran/{id}', [LayananPengaduanController::class, 'destroyKritiksaran'])->name('kritiksaran.destroy');
+    Route::get('/kritiksaran/export/excel', [LayananPengaduanController::class, 'exportKritiksaran'])->name('kritiksaran.export');
+});
 
     // Kelola Admin
     Route::resource('administrators', AdministratorController::class);
