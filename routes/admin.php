@@ -25,6 +25,8 @@ use App\Http\Controllers\Admin\LayananRehabilitasiController;
 use App\Http\Controllers\Admin\LayananKegiatanController;
 use App\Http\Controllers\Admin\LayananPengaduanController;
 use App\Http\Controllers\Admin\AdministratorController;
+use App\Http\Controllers\Admin\AdminManagementController;
+use App\Http\Controllers\Auth\AdminLoginController;
 
 // Public routes
 Route::middleware('guest:admin')->group(function () {
@@ -116,9 +118,20 @@ Route::prefix('layanan/pengaduan')->name('layanan.pengaduan.')->group(function (
     Route::get('/kritiksaran/export/excel', [LayananPengaduanController::class, 'exportKritiksaran'])->name('kritiksaran.export');
 });
 
+// Admin Management Routes - HANYA Super Admin
+    Route::prefix('management')->name('management.')->middleware('superadmin')->group(function () {
+        Route::get('/', [AdminManagementController::class, 'index'])->name('index');
+        Route::get('/create', [AdminManagementController::class, 'create'])->name('create');
+        Route::post('/', [AdminManagementController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [AdminManagementController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [AdminManagementController::class, 'update'])->name('update');
+        Route::delete('/{id}', [AdminManagementController::class, 'destroy'])->name('destroy');
+    });
+
     // Kelola Admin
     Route::resource('administrators', AdministratorController::class);
 
-    // Logout
+    // Logout 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 });

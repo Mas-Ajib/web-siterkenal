@@ -11,6 +11,7 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
         then: function () {
+            // ✅ TAMBAHKAN INI - Load admin routes
             Route::middleware('web')
                 ->prefix('admin')
                 ->name('admin.')
@@ -18,10 +19,11 @@ return Application::configure(basePath: dirname(__DIR__))
         }
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // Register middleware alias
+        // ✅ Register middleware
         $middleware->alias([
-            'admin' => \App\Http\Middleware\AdminMiddleware::class,
+            'superadmin' => App\Http\Middleware\SuperAdminMiddleware::class,
         ]);
+        
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
