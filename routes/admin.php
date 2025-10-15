@@ -38,6 +38,7 @@ Route::middleware('guest:admin')->group(function () {
 Route::middleware('auth:admin')->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/check-new-data', [DashboardController::class, 'checkNewData'])->name('checkNewData');
     
     // Layanan Informasi PPID
     Route::prefix('layanan/ppid')->name('layanan.ppid.')->group(function () {

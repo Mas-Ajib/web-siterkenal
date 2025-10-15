@@ -158,7 +158,7 @@
 
             <!-- Lapor Kemenpan -->
             <a href="https://www.lapor.go.id/" target="_blank"
-               class="group p-8 bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg card-hover text-center fade-in-up" 
+               class="group p-8 bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg card-hover text-center fade-in-up max-w-md w-full" 
                style="animation-delay: 0.9s;">
                 <div class="text-4xl mb-4">📮</div>
                 <h2 class="text-xl font-semibold text-blue-900 group-hover:text-blue-700 transition-colors">
