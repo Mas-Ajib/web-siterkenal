@@ -22,7 +22,7 @@
         </ol>
     </div>
 
-    <h2 class="text-xl font-semibold text-white mb-4">Formulir Permohonan Informasi</h2>
+    {{-- <h2 class="text-xl font-semibold text-white mb-4">Formulir Permohonan Informasi</h2> --}}
 
      @if (session()->has('success'))
         <div class="p-3 mb-3 text-green-800 bg-green-100 rounded">
@@ -31,6 +31,7 @@
     @endif
 
     <form wire:submit.prevent="submit" class="bg-white p-6 rounded-lg shadow space-y-4">
+        <h2 class="text-2xl font-bold">Formulir Permohonan Informasi</h2>
         <div>
             <label class="block font-medium">Nama Pemohon Informasi</label>
             <input type="text" wire:model="nama_pemohon" class="w-full border rounded p-2">
@@ -90,8 +91,10 @@
             @error('cara_mengirim') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
         </div>
 
-        <button type="submit" class="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-700">
-            Kirim Permohonan
-        </button>
+        <div class="tombol-container"> 
+    <button type="submit" class="ml-auto bg-gradient-to-r from-blue-600 to-blue-400 text-white py-3 px-4 rounded-xl hover:from-blue-700 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300 transform hover:scale-105 shadow-lg font-semibold block"> 
+        Kirim Permohonan
+    </button>
+</div>
     </form>
 </div>

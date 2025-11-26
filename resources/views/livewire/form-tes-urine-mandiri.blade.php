@@ -1,5 +1,5 @@
 <div class="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-6">
-    <h2 class="text-xl font-bold mb-4">FORMULIR PERMOHONAN TES URINE MANDIRI</h2>
+    <h2 class="text-2xl font-bold mb-4">Formulir Permohonan Tes Urine Mandiri</h2>
 
     @if (session()->has('success'))
         <div class="p-3 mb-3 text-green-700 bg-green-100 rounded">
@@ -74,7 +74,7 @@
             @error('lampiran') <span class="text-red-500">{{ $message }}</span> @enderror
         </div>
 
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+        <button type="submit" class="ml-auto bg-gradient-to-r from-blue-600 to-blue-400 text-white py-3 px-4 rounded-xl hover:from-blue-700 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300 transform hover:scale-105 shadow-lg font-semibold block">
             Kirim Formulir
         </button>
     </form>

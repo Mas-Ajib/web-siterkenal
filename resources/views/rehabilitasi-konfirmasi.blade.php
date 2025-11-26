@@ -71,7 +71,7 @@
       Terima kasih telah mengisi formulir layanan rehabilitasi.<br />
       Untuk konfirmasi lebih lanjut, silakan hubungi nomor WhatsApp berikut:
     </p>
-    <a href="http://wa.me/0895640640505" target="_blank" class="btn-primary" rel="noopener noreferrer">
+    <a href="http://wa.me/628975419000" target="_blank" class="btn-primary" rel="noopener noreferrer">
       Hubungi via WhatsApp
     </a>
   </div>

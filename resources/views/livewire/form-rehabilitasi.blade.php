@@ -1,5 +1,5 @@
 <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
-    <h2 class="text-2xl font-bold mb-4 text-blue-600">Form Layanan Rehabilitasi</h2>
+    <h2 class="text-2xl font-bold mb-4">Form Layanan Rehabilitasi</h2>
 
     @if (session()->has('success'))
         <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
@@ -36,8 +36,8 @@
             <textarea wire:model="riwayat" class="w-full border rounded p-2 focus:ring focus:ring-blue-300"></textarea>
         </div>
 
-        <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-500 text-white font-semibold px-4 py-2 rounded-lg shadow-lg transition">
-            Kirim
+        <button type="submit" class="ml-auto bg-gradient-to-r from-blue-600 to-blue-400 text-white py-3 px-4 rounded-xl hover:from-blue-700 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300 transform hover:scale-105 shadow-lg font-semibold block">
+            Kirim Formulir
         </button>
     </form>
 </div>

@@ -28,10 +28,10 @@
     <!-- Introduction -->
     @if($step == 1)
     <div class="bg-blue-50 p-4 rounded-lg mb-6">
-        <h2 class="text-xl font-bold text-blue-800 mb-3">Penjelasan Tentang Pelaporan Gratifikasi</h2>
+        <h2 class="text-xl font-bold mb-3">Penjelasan Tentang Pelaporan Gratifikasi</h2>
         <p class="mb-4">Berdasarkan UU No. 31 tahun 1999 jo UU No. 20 tahun 2001 Pasal 12c ayat 2 dan UU No. 30 tahun 2002 Pasal 16, setiap Pegawai Negeri atau Penyelenggara Negara yang menerima gratifikasi wajib melaporkan kepada Komisi Pemberantasan Korupsi</p>
         
-        <h3 class="font-bold text-blue-700 mb-2">Contoh-contoh Pemberian yang dapat dikategorikan sebagai Gratifikasi:</h3>
+        <h3 class="font-bold mb-2">Contoh-contoh Pemberian yang dapat dikategorikan sebagai Gratifikasi:</h3>
         <ol class="list-decimal pl-5 space-y-2">
             <li>Pemberian hadiah atau uang sebagai ucapan terima kasih karena telah dibantu.</li>
             <li>Hadiah atau sumbangan pada saat perkawinan anak dari pejabat oleh rekanan kantor pejabat tersebut.</li>
@@ -135,7 +135,7 @@
             </div>
             
             <div class="flex justify-end mt-6">
-                <button type="button" wire:click="nextStep" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                <button type="button" wire:click="nextStep" class="ml-auto bg-gradient-to-r from-blue-600 to-blue-400 text-white py-3 px-4 rounded-xl hover:from-blue-700 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300 transform hover:scale-105 shadow-lg font-semibold block">
                     Berikutnya
                 </button>
             </div>
@@ -182,10 +182,10 @@
             </div>
             
             <div class="flex justify-between mt-6">
-                <button type="button" wire:click="previousStep" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                <button type="button" wire:click="previousStep" class="bg-gradient-to-r from-blue-600 to-blue-400 text-white py-3 px-4 rounded-xl hover:from-blue-700 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300 transform hover:scale-105 shadow-lg font-semibold">
                     Kembali
                 </button>
-                <button type="button" wire:click="nextStep" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                <button type="button" wire:click="nextStep" class="ml-auto bg-gradient-to-r from-blue-600 to-blue-400 text-white py-3 px-4 rounded-xl hover:from-blue-700 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300 transform hover:scale-105 shadow-lg font-semibold block">
                     Berikutnya
                 </button>
             </div>
@@ -224,10 +224,10 @@
             </div>
             
             <div class="flex justify-between mt-6">
-                <button type="button" wire:click="previousStep" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                <button type="button" wire:click="previousStep" class="bg-gradient-to-r from-blue-600 to-blue-400 text-white py-3 px-4 rounded-xl hover:from-blue-700 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300 transform hover:scale-105 shadow-lg font-semibold">
                     Kembali
                 </button>
-                <button type="button" wire:click="nextStep" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                <button type="button" wire:click="nextStep" class="ml-auto bg-gradient-to-r from-blue-600 to-blue-400 text-white py-3 px-4 rounded-xl hover:from-blue-700 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300 transform hover:scale-105 shadow-lg font-semibold block">
                     Berikutnya
                 </button>
             </div>
@@ -282,10 +282,10 @@
             </div>
             
             <div class="flex justify-between mt-6">
-                <button type="button" wire:click="previousStep" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                <button type="button" wire:click="previousStep" class="bg-gradient-to-r from-blue-600 to-blue-400 text-white py-3 px-4 rounded-xl hover:from-blue-700 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300 transform hover:scale-105 shadow-lg font-semibold">
                     Kembali
                 </button>
-                <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                <button type="submit" class="ml-auto bg-gradient-to-r from-blue-600 to-blue-400 text-white py-3 px-4 rounded-xl hover:from-blue-700 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300 transform hover:scale-105 shadow-lg font-semibold block">
                     Kirim Laporan
                 </button>
             </div>

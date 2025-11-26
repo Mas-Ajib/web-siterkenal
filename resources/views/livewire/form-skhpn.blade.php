@@ -1,5 +1,5 @@
 <div class="max-w-2xl mx-auto bg-white shadow-lg rounded-2xl p-6 mt-6">
-    <h2 class="text-2xl font-bold text-blue-600 mb-4">Form Layanan SKHPN</h2>
+    <h2 class="text-2xl font-bold mb-4">Form Layanan SKHPN</h2>
 
     @if (session()->has('success'))
         <div class="bg-green-100 text-green-800 p-3 rounded mb-4">

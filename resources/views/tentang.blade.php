@@ -7,10 +7,18 @@
 
     <!-- Alamat -->
     <div class="bg-white shadow rounded-lg p-6 mb-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-2">Tujuan Siterkenal</h2>
+        <p class="text-gray-600">
+            Tujuan dari website ini adalah untuk memusatkan seluruh layanan Badan Narkotika Nasional (BNN) Kabupaten Kendal dalam satu platform terpadu (satu pintu). Hal ini demi memberikan kemudahan dan efisiensi kepada masyarakat saat mengakses layanan BNN Kabupaten Kendal. Silakan pilih layanan yang Anda butuhkan di menu atas.
+        </p>
+    </div>
+
+    <!-- Alamat -->
+    <div class="bg-white shadow rounded-lg p-6 mb-6">
         <h2 class="text-xl font-semibold text-gray-800 mb-2">Alamat Kantor</h2>
         <p class="text-gray-600">
             Badan Narkotika Nasional Kabupaten Kendal<br>
-            Jl. Soekarno Hatta No. 204, Kebondalem, Kendal, Jawa Tengah
+            Jl. Gajahmada, Srendeng, Karang Sari, Kec. Kendal, Kabupaten Kendal, Jawa Tengah 51319
         </p>
     </div>
 
@@ -38,8 +46,8 @@
         <h2 class="text-xl font-semibold text-gray-800 mb-2">Call Center</h2>
         <p class="text-gray-600">
             Nomor Call Center BNNK Kendal: 
-            <a href="tel:+62296891955" class="text-blue-600 hover:underline font-medium">
-                (0296) 891955
+            <a href="tel:+628975419000 class="text-blue-600 hover:underline font-medium">
+                628975419000
             </a>
         </p>
     </div>

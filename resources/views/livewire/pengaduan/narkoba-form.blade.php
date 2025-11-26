@@ -14,7 +14,7 @@
 
     <!-- Deskripsi -->
     <div class="bg-blue-50 p-4 rounded-lg mb-6">
-        <h2 class="text-xl font-bold text-blue-800 mb-3">Formulir Pelaporan Penyalahgunaan Narkoba</h2>
+        <h2 class="text-2xl font-bold mb-3">Formulir Pelaporan Penyalahgunaan Narkoba</h2>
         <p class="mb-3">Masyarakat mempunyai kesempatan yang seluas-luasnya untuk berperan serta membantu pencegahan dan pemberantasan penyalahgunaan dan peredaran gelap Narkotika dan Prekursor Narkotika (Pasal 104 UU 35/2009).</p>
         <p class="mb-3">Badan Narkotika Nasional Kabupaten Kendal menerima pengaduan dari masyarakat apabila mempunyai informasi terkait adanya dugaan telah terjadi tindak pidana narkotika di lingkungannya.</p>
         <p class="font-semibold text-blue-700">Sebagai bentuk perlindungan, Badan Narkotika Nasional Kabupaten Kendal akan merahasiakan identitas Pelapor.</p>
@@ -52,7 +52,7 @@
 
         <!-- Tombol Submit -->
         <div class="flex justify-end">
-            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+            <button type="submit" class="ml-auto bg-gradient-to-r from-blue-600 to-blue-400 text-white py-3 px-4 rounded-xl hover:from-blue-700 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300 transform hover:scale-105 shadow-lg font-semibold block">
                 Kirim Laporan
             </button>
         </div>

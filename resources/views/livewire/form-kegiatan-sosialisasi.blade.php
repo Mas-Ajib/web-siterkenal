@@ -1,5 +1,5 @@
 <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-lg">
-    <h2 class="text-2xl font-bold mb-4 text-blue-600">Form Kegiatan Sosialisasi</h2>
+    <h2 class="text-2xl font-bold mb-4">Form Kegiatan Sosialisasi</h2>
 
     @if (session()->has('success'))
         <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
@@ -86,8 +86,8 @@
             <div wire:loading wire:target="lampiran" class="text-blue-600 mt-1 text-sm">Mengunggah...</div>
         </div>
 
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-            Kirim
+        <button type="submit" class="ml-auto bg-gradient-to-r from-blue-600 to-blue-400 text-white py-3 px-4 rounded-xl hover:from-blue-700 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300 transform hover:scale-105 shadow-lg font-semibold block">
+            Kirim Formulir
         </button>
     </form>
 </div>

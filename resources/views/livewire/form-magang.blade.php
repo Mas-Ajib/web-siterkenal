@@ -1,5 +1,5 @@
 <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-lg">
-    <h2 class="text-2xl font-bold mb-4 text-blue-600">Formulir Permohonan Magang / Riset</h2>
+    <h2 class="text-2xl font-bold mb-4">Formulir Permohonan Magang / Riset</h2>
 
     @if (session()->has('success'))
         <div class="bg-green-100 text-green-700 p-3 rounded mb-4">

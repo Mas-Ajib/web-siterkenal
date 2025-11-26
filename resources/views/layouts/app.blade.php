@@ -45,7 +45,7 @@
                     </button>
                     <div class="absolute right-0 hidden mt-2 w-48 bg-white text-black rounded-lg shadow-lg 
                                 group-hover:block group-focus-within:block">
-                        <a href="/skhpn" class="block px-4 py-2 hover:bg-gray-100">SKHPN</a>
+                        <a href="https://drive.google.com/file/d/1lIG-vtdnMb470l7bBZS3uoJW2RBOtnEj/view" class="block px-4 py-2 hover:bg-gray-100">SKHPN</a>
                         <a href="/rehabilitasi" class="block px-4 py-2 hover:bg-gray-100">Rehabilitasi</a>
                         <a href="/kegiatan" class="block px-4 py-2 hover:bg-gray-100">Kegiatan</a>
                         <a href="/ppid-informasi" class="block px-4 py-2 hover:bg-gray-100">PPID</a>
@@ -82,10 +82,10 @@
                     <i :class="layananOpen ? 'fa-chevron-up' : 'fa-chevron-down'" class="fas ml-2"></i>
                 </button>
                 <div x-show="layananOpen" class="pl-4 mt-2 space-y-1">
-                    <a href="{{ route('form.skhpn') }}" class="block text-gray-600 hover:text-blue-600">SKHPN</a>
+                    <a href="https://drive.google.com/file/d/1lIG-vtdnMb470l7bBZS3uoJW2RBOtnEj/view" class="block text-gray-600 hover:text-blue-600">SKHPN</a>
                     <a href="{{ route('form.rehabilitasi') }}" class="block text-gray-600 hover:text-blue-600">Rehabilitasi</a>
                     <a href="{{ route('form.kegiatan') }}" class="block text-gray-600 hover:text-blue-600">Kegiatan</a>
-                    <a href="{{ route('form.ppid') }}" class="block text-gray-600 hover:text-blue-600">Informasi</a>
+                    <a href="/ppid-informasi" class="block text-gray-600 hover:text-blue-600">PPID</a>
                     <a href="{{ route('form.pengaduan') }}" class="block text-gray-600 hover:text-blue-600">Pengaduan</a>
                 </div>
             </div>

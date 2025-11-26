@@ -15,7 +15,6 @@ use App\Models\Magang;
 use App\Models\Tat;
 use App\Models\Sosialisasi;
 use App\Models\TesUrineMandiri;
-use App\Models\PageView; // Asumsi model untuk tracking pengunjung
 use Carbon\Carbon;
 
 class DashboardController extends Controller
@@ -106,7 +105,7 @@ class DashboardController extends Controller
             ]
         ];
 
-        // Statistik Pengunjung Website
+        // Statistik Pengunjung Website (dummy data untuk sementara)
         $visitorStats = $this->getVisitorStats();
 
         // Total Semua Layanan
@@ -122,18 +121,23 @@ class DashboardController extends Controller
             $stats['kegiatan']['sosialisasi']['total'] +
             $stats['kegiatan']['tes_urine']['total'];
 
-        // Data untuk Chart Mingguan
-        $weeklyData = $this->getWeeklyData();
+        // Data untuk Chart
+        $allTimeData = $this->getAllTimeData();
+        $categoryDistribution = $this->getCategoryDistribution();
+        $yearlyComparison = $this->getYearlyComparison();
         
         // Aktivitas Terbaru
         $recentActivities = $this->getRecentActivities();
 
+        // HAPUS $weeklyData karena tidak digunakan
         return view('admin.dashboard', compact(
             'stats', 
             'totalAllLayanan',
-            'weeklyData',
             'recentActivities',
-            'visitorStats'
+            'visitorStats',
+            'allTimeData',
+            'categoryDistribution',
+            'yearlyComparison'
         ));
     }
 
@@ -149,57 +153,142 @@ class DashboardController extends Controller
         return round((($todayCount - $yesterdayCount) / $yesterdayCount) * 100, 2);
     }
 
-    private function getWeeklyData()
+    private function getAllTimeData()
     {
-        $labels = [];
-        $datasets = [
-            'pengaduan' => [],
-            'ppid' => [],
-            'rehabilitasi' => [],
-            'kegiatan' => [],
-            'pengunjung' => [] // Tambahan untuk pengunjung
+        // Data bulanan untuk 12 bulan terakhir
+        $monthlyData = [
+            'labels' => [],
+            'datasets' => [
+                'pengaduan' => [],
+                'ppid' => [],
+                'rehabilitasi' => [],
+                'kegiatan' => []
+            ]
         ];
-
-        for ($i = 6; $i >= 0; $i--) {
-            $date = now()->subDays($i);
-            $labels[] = $date->format('d M');
+        
+        for ($i = 11; $i >= 0; $i--) {
+            $date = now()->subMonths($i);
+            $monthLabel = $date->format('M Y');
             
-            $dateString = $date->format('Y-m-d');
-
+            $monthlyData['labels'][] = $monthLabel;
+            
             // Pengaduan
-            $datasets['pengaduan'][] = 
-                GratifikasiReport::whereDate('created_at', $dateString)->count() +
-                WhistleBlowingReport::whereDate('created_at', $dateString)->count() +
-                NarkobaReport::whereDate('created_at', $dateString)->count() +
-                KritikSaranReport::whereDate('created_at', $dateString)->count();
+            $monthlyData['datasets']['pengaduan'][] = 
+                GratifikasiReport::whereYear('created_at', $date->year)
+                            ->whereMonth('created_at', $date->month)
+                            ->count() +
+                WhistleBlowingReport::whereYear('created_at', $date->year)
+                              ->whereMonth('created_at', $date->month)
+                              ->count() +
+                NarkobaReport::whereYear('created_at', $date->year)
+                        ->whereMonth('created_at', $date->month)
+                        ->count() +
+                KritikSaranReport::whereYear('created_at', $date->year)
+                           ->whereMonth('created_at', $date->month)
+                           ->count();
 
             // PPID
-            $datasets['ppid'][] = PpidRequest::whereDate('created_at', $dateString)->count();
+            $monthlyData['datasets']['ppid'][] = 
+                PpidRequest::whereYear('created_at', $date->year)
+                      ->whereMonth('created_at', $date->month)
+                      ->count();
 
             // Rehabilitasi
-            $datasets['rehabilitasi'][] = Rehabilitasi::whereDate('created_at', $dateString)->count();
+            $monthlyData['datasets']['rehabilitasi'][] = 
+                Rehabilitasi::whereYear('created_at', $date->year)
+                       ->whereMonth('created_at', $date->month)
+                       ->count();
 
             // Kegiatan
-            $datasets['kegiatan'][] = 
-                Magang::whereDate('created_at', $dateString)->count() +
-                Tat::whereDate('created_at', $dateString)->count() +
-                Sosialisasi::whereDate('created_at', $dateString)->count() +
-                TesUrineMandiri::whereDate('created_at', $dateString)->count();
-
-            // Pengunjung (contoh - sesuaikan dengan model tracking kamu)
-            $datasets['pengunjung'][] = rand(50, 200); // Contoh data dummy
+            $monthlyData['datasets']['kegiatan'][] = 
+                Magang::whereYear('created_at', $date->year)
+                  ->whereMonth('created_at', $date->month)
+                  ->count() +
+                Tat::whereYear('created_at', $date->year)
+               ->whereMonth('created_at', $date->month)
+               ->count() +
+                Sosialisasi::whereYear('created_at', $date->year)
+                      ->whereMonth('created_at', $date->month)
+                      ->count() +
+                TesUrineMandiri::whereYear('created_at', $date->year)
+                          ->whereMonth('created_at', $date->month)
+                          ->count();
         }
 
+        return $monthlyData;
+    }
+
+    private function getCategoryDistribution()
+    {
+        // Distribusi per kategori untuk pie chart
         return [
-            'labels' => $labels,
-            'datasets' => $datasets
+            'labels' => ['Gratifikasi', 'Whistleblowing', 'Narkoba', 'Kritik & Saran', 'PPID', 'Rehabilitasi', 'Magang', 'TAT', 'Sosialisasi', 'Tes Urine'],
+            'data' => [
+                GratifikasiReport::count(),
+                WhistleBlowingReport::count(),
+                NarkobaReport::count(),
+                KritikSaranReport::count(),
+                PpidRequest::count(),
+                Rehabilitasi::count(),
+                Magang::count(),
+                Tat::count(),
+                Sosialisasi::count(),
+                TesUrineMandiri::count()
+            ],
+            'colors' => [
+                '#EF4444', '#F59E0B', '#8B5CF6', '#EC4899', 
+                '#3B82F6', '#10B981', '#06B6D4', '#84CC16', 
+                '#F97316', '#6B7280'
+            ]
+        ];
+    }
+
+    private function getYearlyComparison()
+    {
+        // Perbandingan tahun ini vs tahun lalu
+        $currentYear = now()->year;
+        $lastYear = $currentYear - 1;
+        
+        $currentYearData = [
+            'pengaduan' => 
+                GratifikasiReport::whereYear('created_at', $currentYear)->count() +
+                WhistleBlowingReport::whereYear('created_at', $currentYear)->count() +
+                NarkobaReport::whereYear('created_at', $currentYear)->count() +
+                KritikSaranReport::whereYear('created_at', $currentYear)->count(),
+            'ppid' => PpidRequest::whereYear('created_at', $currentYear)->count(),
+            'rehabilitasi' => Rehabilitasi::whereYear('created_at', $currentYear)->count(),
+            'kegiatan' => 
+                Magang::whereYear('created_at', $currentYear)->count() +
+                Tat::whereYear('created_at', $currentYear)->count() +
+                Sosialisasi::whereYear('created_at', $currentYear)->count() +
+                TesUrineMandiri::whereYear('created_at', $currentYear)->count()
+        ];
+        
+        $lastYearData = [
+            'pengaduan' => 
+                GratifikasiReport::whereYear('created_at', $lastYear)->count() +
+                WhistleBlowingReport::whereYear('created_at', $lastYear)->count() +
+                NarkobaReport::whereYear('created_at', $lastYear)->count() +
+                KritikSaranReport::whereYear('created_at', $lastYear)->count(),
+            'ppid' => PpidRequest::whereYear('created_at', $lastYear)->count(),
+            'rehabilitasi' => Rehabilitasi::whereYear('created_at', $lastYear)->count(),
+            'kegiatan' => 
+                Magang::whereYear('created_at', $lastYear)->count() +
+                Tat::whereYear('created_at', $lastYear)->count() +
+                Sosialisasi::whereYear('created_at', $lastYear)->count() +
+                TesUrineMandiri::whereYear('created_at', $lastYear)->count()
+        ];
+        
+        return [
+            'labels' => ['Pengaduan', 'PPID', 'Rehabilitasi', 'Kegiatan'],
+            'currentYear' => array_values($currentYearData),
+            'lastYear' => array_values($lastYearData)
         ];
     }
 
     private function getVisitorStats()
     {
         // Contoh data pengunjung - sesuaikan dengan sistem tracking kamu
-        // Asumsi menggunakan model PageView atau Visitor
         return [
             'today' => [
                 'count' => rand(100, 500),
@@ -223,7 +312,6 @@ class DashboardController extends Controller
     {
         $activities = [];
 
-        // Check each service for recent activities (last 24 hours)
         $services = [
             ['model' => GratifikasiReport::class, 'icon' => 'exclamation-triangle', 'message' => 'Laporan Gratifikasi baru', 'color' => 'red'],
             ['model' => WhistleBlowingReport::class, 'icon' => 'shield-alt', 'message' => 'Laporan Whistleblowing baru', 'color' => 'orange'],
@@ -249,7 +337,6 @@ class DashboardController extends Controller
             }
         }
 
-        // Urutkan berdasarkan waktu dan ambil 5 terbaru
         usort($activities, function($a, $b) {
             return strtotime($b['time']) - strtotime($a['time']);
         });
