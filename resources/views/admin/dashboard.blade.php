@@ -9,45 +9,49 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
-
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
         .growth-positive {
             color: #10B981;
         }
-
+        
         .growth-negative {
             color: #EF4444;
         }
-
-        .notification-badge {
-            animation: pulse 2s infinite;
+        
+        .category-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
         }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.5;
-            }
+        
+        .category-badge-pengaduan {
+            background-color: #FEE2E2;
+            color: #DC2626;
+        }
+        
+        .category-badge-ppid {
+            background-color: #DBEAFE;
+            color: #1D4ED8;
+        }
+        
+        .category-badge-rehabilitasi {
+            background-color: #D1FAE5;
+            color: #047857;
+        }
+        
+        .category-badge-kegiatan {
+            background-color: #EDE9FE;
+            color: #7C3AED;
         }
     </style>
 
-    <!-- Notification Toast -->
-    <div id="notificationToast"
-        class="hidden fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50">
-        <div class="flex items-center">
-            <i class="fas fa-bell mr-3"></i>
-            <span id="notificationMessage"></span>
-            <button onclick="hideNotification()" class="ml-4 text-white hover:text-gray-200">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-    </div>
-
-    <!-- Total Overview -->
+    <!-- Stat Cards - SEMUA 5 KARTU (Total + 4 Layanan) -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-6">
         <!-- Total Semua Layanan -->
         <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg shadow text-white p-6 stat-card">
@@ -58,7 +62,7 @@
                 <div class="ml-4">
                     <h3 class="text-sm font-medium opacity-90">Total Semua Layanan</h3>
                     <p class="text-2xl font-semibold">{{ number_format($totalAllLayanan) }}</p>
-                    <p class="text-xs opacity-80">Semua jenis layanan</p>
+                    <p class="text-xs opacity-80">4 kategori layanan</p>
                 </div>
             </div>
         </div>
@@ -71,15 +75,11 @@
                 </div>
                 <div class="ml-4">
                     <h3 class="text-sm font-medium text-gray-500">Pengaduan Masyarakat</h3>
-                    <p class="text-2xl font-semibold text-gray-900">
-                        {{ number_format(
-                            $stats['pengaduan']['gratifikasi']['total'] +
-                                $stats['pengaduan']['whistleblowing']['total'] +
-                                $stats['pengaduan']['narkoba']['total'] +
-                                $stats['pengaduan']['kritiksaran']['total'],
-                        ) }}
+                    <p class="text-2xl font-semibold text-gray-900">{{ number_format($stats['pengaduan']['total']) }}</p>
+                    <p class="text-xs {{ $stats['pengaduan']['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }}">
+                        <i class="fas fa-arrow-{{ $stats['pengaduan']['growth'] >= 0 ? 'up' : 'down' }} mr-1"></i>
+                        {{ $stats['pengaduan']['growth'] >= 0 ? '+' : '' }}{{ $stats['pengaduan']['growth'] }}%
                     </p>
-                    <p class="text-xs text-gray-500">4 jenis pengaduan</p>
                 </div>
             </div>
         </div>
@@ -94,7 +94,8 @@
                     <h3 class="text-sm font-medium text-gray-500">Layanan PPID</h3>
                     <p class="text-2xl font-semibold text-gray-900">{{ number_format($stats['ppid']['total']) }}</p>
                     <p class="text-xs {{ $stats['ppid']['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }}">
-                        {{ $stats['ppid']['growth'] >= 0 ? '+' : '' }}{{ $stats['ppid']['growth'] }}% dari kemarin
+                        <i class="fas fa-arrow-{{ $stats['ppid']['growth'] >= 0 ? 'up' : 'down' }} mr-1"></i>
+                        {{ $stats['ppid']['growth'] >= 0 ? '+' : '' }}{{ $stats['ppid']['growth'] }}%
                     </p>
                 </div>
             </div>
@@ -110,8 +111,8 @@
                     <h3 class="text-sm font-medium text-gray-500">Rehabilitasi</h3>
                     <p class="text-2xl font-semibold text-gray-900">{{ number_format($stats['rehabilitasi']['total']) }}</p>
                     <p class="text-xs {{ $stats['rehabilitasi']['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }}">
-                        {{ $stats['rehabilitasi']['growth'] >= 0 ? '+' : '' }}{{ $stats['rehabilitasi']['growth'] }}% dari
-                        kemarin
+                        <i class="fas fa-arrow-{{ $stats['rehabilitasi']['growth'] >= 0 ? 'up' : 'down' }} mr-1"></i>
+                        {{ $stats['rehabilitasi']['growth'] >= 0 ? '+' : '' }}{{ $stats['rehabilitasi']['growth'] }}%
                     </p>
                 </div>
             </div>
@@ -125,15 +126,11 @@
                 </div>
                 <div class="ml-4">
                     <h3 class="text-sm font-medium text-gray-500">Layanan Kegiatan</h3>
-                    <p class="text-2xl font-semibold text-gray-900">
-                        {{ number_format(
-                            $stats['kegiatan']['magang']['total'] +
-                                $stats['kegiatan']['tat']['total'] +
-                                $stats['kegiatan']['sosialisasi']['total'] +
-                                $stats['kegiatan']['tes_urine']['total'],
-                        ) }}
+                    <p class="text-2xl font-semibold text-gray-900">{{ number_format($stats['kegiatan']['total']) }}</p>
+                    <p class="text-xs {{ $stats['kegiatan']['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }}">
+                        <i class="fas fa-arrow-{{ $stats['kegiatan']['growth'] >= 0 ? 'up' : 'down' }} mr-1"></i>
+                        {{ $stats['kegiatan']['growth'] >= 0 ? '+' : '' }}{{ $stats['kegiatan']['growth'] }}%
                     </p>
-                    <p class="text-xs text-gray-500">4 jenis kegiatan</p>
                 </div>
             </div>
         </div>
@@ -141,489 +138,348 @@
 
     <!-- Charts Section -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <!-- Trend Bulanan (12 Bulan Terakhir) -->
+        <!-- Chart 1: Total Data -->
         <div class="bg-white rounded-lg shadow p-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Trend Input Data (12 Bulan Terakhir)</h3>
-            <div class="h-64">
-                <canvas id="monthlyTrendChart"></canvas>
-            </div>
-        </div>
-
-        <!-- Distribusi Kategori -->
-        <div class="bg-white rounded-lg shadow p-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Distribusi Semua Layanan</h3>
-            <div class="h-64">
-                <canvas id="categoryChart"></canvas>
-            </div>
-        </div>
-    </div>
-
-    <!-- Perbandingan Tahun -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <!-- Perbandingan Tahun Ini vs Tahun Lalu -->
-        <div class="bg-white rounded-lg shadow p-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Perbandingan Tahun {{ now()->year }} vs
-                {{ now()->subYear()->year }}</h3>
-            <div class="h-64">
-                <canvas id="yearlyComparisonChart"></canvas>
-            </div>
-        </div>
-
-        <!-- Statistik Ringkas -->
-        <div class="bg-white rounded-lg shadow p-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Statistik Ringkas</h3>
-            <div class="space-y-4">
-                <!-- Total per Kategori -->
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-blue-50 p-4 rounded-lg">
-                        <div class="flex items-center">
-                            <div class="p-2 bg-blue-100 rounded-lg mr-3">
-                                <i class="fas fa-exclamation-triangle text-blue-600"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-600">Total Pengaduan</p>
-                                <p class="text-xl font-bold text-gray-900">
-                                    {{ number_format(
-                                        $stats['pengaduan']['gratifikasi']['total'] +
-                                            $stats['pengaduan']['whistleblowing']['total'] +
-                                            $stats['pengaduan']['narkoba']['total'] +
-                                            $stats['pengaduan']['kritiksaran']['total'],
-                                    ) }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-green-50 p-4 rounded-lg">
-                        <div class="flex items-center">
-                            <div class="p-2 bg-green-100 rounded-lg mr-3">
-                                <i class="fas fa-file-alt text-green-600"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-600">Total PPID</p>
-                                <p class="text-xl font-bold text-gray-900">
-                                    {{ number_format($stats['ppid']['total']) }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-purple-50 p-4 rounded-lg">
-                        <div class="flex items-center">
-                            <div class="p-2 bg-purple-100 rounded-lg mr-3">
-                                <i class="fas fa-heartbeat text-purple-600"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-600">Total Rehabilitasi</p>
-                                <p class="text-xl font-bold text-gray-900">
-                                    {{ number_format($stats['rehabilitasi']['total']) }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-orange-50 p-4 rounded-lg">
-                        <div class="flex items-center">
-                            <div class="p-2 bg-orange-100 rounded-lg mr-3">
-                                <i class="fas fa-tasks text-orange-600"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-600">Total Kegiatan</p>
-                                <p class="text-xl font-bold text-gray-900">
-                                    {{ number_format(
-                                        $stats['kegiatan']['magang']['total'] +
-                                            $stats['kegiatan']['tat']['total'] +
-                                            $stats['kegiatan']['sosialisasi']['total'] +
-                                            $stats['kegiatan']['tes_urine']['total'],
-                                    ) }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+            <div class="flex items-center mb-4">
+                <div class="p-2 bg-blue-100 rounded-lg mr-3">
+                    <i class="fas fa-chart-bar text-blue-600"></i>
                 </div>
+                <h3 class="text-lg font-semibold text-gray-900">Perbandingan Total Semua Layanan</h3>
+            </div>
+            <div class="chart-container">
+                <canvas id="totalChart"></canvas>
+            </div>
+        </div>
 
-                <!-- Rata-rata Bulanan -->
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <h4 class="font-semibold text-gray-700 mb-2">Rata-rata per Bulan</h4>
-                    <div class="grid grid-cols-4 gap-2 text-center">
-                        <div>
-                            <p class="text-2xl font-bold text-blue-600">
-                                {{ number_format(($stats['pengaduan']['gratifikasi']['total'] + $stats['pengaduan']['whistleblowing']['total'] + $stats['pengaduan']['narkoba']['total'] + $stats['pengaduan']['kritiksaran']['total']) / max(1, 12)) }}
-                            </p>
-                            <p class="text-xs text-gray-500">Pengaduan</p>
-                        </div>
-                        <div>
-                            <p class="text-2xl font-bold text-green-600">
-                                {{ number_format($stats['ppid']['total'] / max(1, 12)) }}
-                            </p>
-                            <p class="text-xs text-gray-500">PPID</p>
-                        </div>
-                        <div>
-                            <p class="text-2xl font-bold text-purple-600">
-                                {{ number_format($stats['rehabilitasi']['total'] / max(1, 12)) }}
-                            </p>
-                            <p class="text-xs text-gray-500">Rehabilitasi</p>
-                        </div>
-                        <div>
-                            <p class="text-2xl font-bold text-orange-600">
-                                {{ number_format(($stats['kegiatan']['magang']['total'] + $stats['kegiatan']['tat']['total'] + $stats['kegiatan']['sosialisasi']['total'] + $stats['kegiatan']['tes_urine']['total']) / max(1, 12)) }}
-                            </p>
-                            <p class="text-xs text-gray-500">Kegiatan</p>
-                        </div>
-                    </div>
+        <!-- Chart 2: Monthly Data -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center mb-4">
+                <div class="p-2 bg-green-100 rounded-lg mr-3">
+                    <i class="fas fa-chart-pie text-green-600"></i>
                 </div>
+                <h3 class="text-lg font-semibold text-gray-900">Distribusi Data Bulan Ini</h3>
+            </div>
+            <div class="chart-container">
+                <canvas id="monthlyChart"></canvas>
             </div>
         </div>
     </div>
 
     <!-- Aktivitas Terbaru -->
-    <div class="bg-white rounded-lg shadow p-6 mb-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Aktivitas Terbaru</h3>
-        <div class="space-y-3">
-            @forelse($recentActivities as $activity)
-                <div class="flex items-start p-3 bg-gray-50 rounded-lg border-l-4 border-{{ $activity['color'] }}-400">
-                    <div class="p-2 bg-{{ $activity['color'] }}-100 rounded-full mr-3">
-                        <i class="fas fa-{{ $activity['icon'] }} text-{{ $activity['color'] }}-600 text-sm"></i>
-                    </div>
-                    <div class="flex-1">
-                        <p class="text-sm text-gray-800">{{ $activity['message'] }}</p>
-                        <p class="text-xs text-gray-500">{{ $activity['time'] }}</p>
-                    </div>
-                </div>
-            @empty
-                <div class="text-center py-4 text-gray-500">
-                    <i class="fas fa-inbox text-3xl mb-2"></i>
-                    <p>Tidak ada aktivitas terbaru</p>
-                </div>
-            @endforelse
-        </div>
-    </div>
-
-    <!-- Layanan Details -->
     <div class="bg-white rounded-lg shadow mb-6">
         <div class="px-6 py-4 border-b border-gray-200">
-            <h3 class="text-lg font-semibold text-gray-900">Detail Semua Layanan</h3>
+            <h3 class="text-lg font-semibold text-gray-900">Aktivitas Terbaru</h3>
         </div>
         <div class="p-6">
-            <!-- Pengaduan Masyarakat -->
-            <div class="mb-8">
-                <h4 class="font-semibold text-gray-700 mb-4 flex items-center">
+            <div class="space-y-3">
+                @forelse($recentActivities as $activity)
+                    <div class="flex items-start p-3 bg-gray-50 rounded-lg border-l-4 border-{{ $activity['color'] }}-400">
+                        <div class="p-2 bg-{{ $activity['color'] }}-100 rounded-full mr-3">
+                            <i class="fas fa-{{ $activity['icon'] }} text-{{ $activity['color'] }}-600 text-sm"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm text-gray-800">{{ $activity['message'] }}</p>
+                            <p class="text-xs text-gray-500">{{ $activity['time'] }}</p>
+                        </div>
+                    </div>
+                @empty
+                    <div class="text-center py-4 text-gray-500">
+                        <i class="fas fa-inbox text-3xl mb-2"></i>
+                        <p>Tidak ada aktivitas terbaru</p>
+                    </div>
+                @endforelse
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Cards untuk SEMUA LAYANAN -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <!-- Detail Pengaduan -->
+        <div class="bg-white rounded-lg shadow">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-semibold text-gray-900 flex items-center">
                     <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>
-                    Pengaduan Masyarakat
-                </h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <!-- Gratifikasi -->
+                    Detail Pengaduan Masyarakat
+                    <span class="category-badge category-badge-pengaduan ml-2">4 Jenis</span>
+                </h3>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-2 gap-4">
+                    @foreach($stats['pengaduan']['details'] as $key => $detail)
                     <div class="border rounded-lg p-4 hover:shadow-md transition-shadow bg-red-50">
-                        <div class="flex items-center justify-between">
-                            <h4 class="font-medium text-gray-700">Gratifikasi</h4>
-                            <span
-                                class="text-xs px-2 py-1 bg-red-100 text-red-800 rounded-full">{{ $stats['pengaduan']['gratifikasi']['total'] }}</span>
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="font-medium text-gray-700 capitalize">
+                                @if($key == 'gratifikasi')
+                                    Gratifikasi
+                                @elseif($key == 'whistleblowing')
+                                    Whistleblowing
+                                @elseif($key == 'narkoba')
+                                    Narkoba
+                                @elseif($key == 'kritiksaran')
+                                    Kritik & Saran
+                                @endif
+                            </h4>
+                            <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                                {{ $detail['total'] }}
+                            </span>
                         </div>
-                        <div class="mt-2 text-sm text-gray-600 space-y-1">
-                            <div>Hari ini: <strong>{{ $stats['pengaduan']['gratifikasi']['today'] }}</strong></div>
-                            <div>Minggu ini: <strong>{{ $stats['pengaduan']['gratifikasi']['week'] }}</strong></div>
-                            <div>Bulan ini: <strong>{{ $stats['pengaduan']['gratifikasi']['month'] }}</strong></div>
-                            <div
-                                class="text-xs {{ $stats['pengaduan']['gratifikasi']['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }} mt-1">
-                                <i
-                                    class="fas fa-arrow-{{ $stats['pengaduan']['gratifikasi']['growth'] >= 0 ? 'up' : 'down' }} mr-1"></i>
-                                {{ $stats['pengaduan']['gratifikasi']['growth'] >= 0 ? '+' : '' }}{{ $stats['pengaduan']['gratifikasi']['growth'] }}%
-                                (hari ini)
+                        <div class="text-sm text-gray-600 space-y-1">
+                            <div class="flex justify-between">
+                                <span>Hari ini:</span>
+                                <span class="font-medium">{{ $detail['today'] }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Bulan ini:</span>
+                                <span class="font-medium">{{ $detail['month'] }}</span>
+                            </div>
+                            <div class="text-xs {{ $detail['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }} text-right">
+                                <i class="fas fa-arrow-{{ $detail['growth'] >= 0 ? 'up' : 'down' }} mr-1"></i>
+                                {{ $detail['growth'] >= 0 ? '+' : '' }}{{ $detail['growth'] }}%
                             </div>
                         </div>
                     </div>
-
-                    <!-- Whistleblowing -->
-                    <div class="border rounded-lg p-4 hover:shadow-md transition-shadow bg-red-50">
-                        <div class="flex items-center justify-between">
-                            <h4 class="font-medium text-gray-700">Whistleblowing</h4>
-                            <span
-                                class="text-xs px-2 py-1 bg-red-100 text-red-800 rounded-full">{{ $stats['pengaduan']['whistleblowing']['total'] }}</span>
-                        </div>
-                        <div class="mt-2 text-sm text-gray-600 space-y-1">
-                            <div>Hari ini: <strong>{{ $stats['pengaduan']['whistleblowing']['today'] }}</strong></div>
-                            <div>Minggu ini: <strong>{{ $stats['pengaduan']['whistleblowing']['week'] }}</strong></div>
-                            <div>Bulan ini: <strong>{{ $stats['pengaduan']['whistleblowing']['month'] }}</strong></div>
-                            <div
-                                class="text-xs {{ $stats['pengaduan']['whistleblowing']['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }} mt-1">
-                                <i
-                                    class="fas fa-arrow-{{ $stats['pengaduan']['whistleblowing']['growth'] >= 0 ? 'up' : 'down' }} mr-1"></i>
-                                {{ $stats['pengaduan']['whistleblowing']['growth'] >= 0 ? '+' : '' }}{{ $stats['pengaduan']['whistleblowing']['growth'] }}%
-                                (hari ini)
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Narkoba -->
-                    <div class="border rounded-lg p-4 hover:shadow-md transition-shadow bg-red-50">
-                        <div class="flex items-center justify-between">
-                            <h4 class="font-medium text-gray-700">Narkoba</h4>
-                            <span
-                                class="text-xs px-2 py-1 bg-red-100 text-red-800 rounded-full">{{ $stats['pengaduan']['narkoba']['total'] }}</span>
-                        </div>
-                        <div class="mt-2 text-sm text-gray-600 space-y-1">
-                            <div>Hari ini: <strong>{{ $stats['pengaduan']['narkoba']['today'] }}</strong></div>
-                            <div>Minggu ini: <strong>{{ $stats['pengaduan']['narkoba']['week'] }}</strong></div>
-                            <div>Bulan ini: <strong>{{ $stats['pengaduan']['narkoba']['month'] }}</strong></div>
-                            <div
-                                class="text-xs {{ $stats['pengaduan']['narkoba']['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }} mt-1">
-                                <i
-                                    class="fas fa-arrow-{{ $stats['pengaduan']['narkoba']['growth'] >= 0 ? 'up' : 'down' }} mr-1"></i>
-                                {{ $stats['pengaduan']['narkoba']['growth'] >= 0 ? '+' : '' }}{{ $stats['pengaduan']['narkoba']['growth'] }}%
-                                (hari ini)
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Kritik & Saran -->
-                    <div class="border rounded-lg p-4 hover:shadow-md transition-shadow bg-red-50">
-                        <div class="flex items-center justify-between">
-                            <h4 class="font-medium text-gray-700">Kritik & Saran</h4>
-                            <span
-                                class="text-xs px-2 py-1 bg-red-100 text-red-800 rounded-full">{{ $stats['pengaduan']['kritiksaran']['total'] }}</span>
-                        </div>
-                        <div class="mt-2 text-sm text-gray-600 space-y-1">
-                            <div>Hari ini: <strong>{{ $stats['pengaduan']['kritiksaran']['today'] }}</strong></div>
-                            <div>Minggu ini: <strong>{{ $stats['pengaduan']['kritiksaran']['week'] }}</strong></div>
-                            <div>Bulan ini: <strong>{{ $stats['pengaduan']['kritiksaran']['month'] }}</strong></div>
-                            <div
-                                class="text-xs {{ $stats['pengaduan']['kritiksaran']['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }} mt-1">
-                                <i
-                                    class="fas fa-arrow-{{ $stats['pengaduan']['kritiksaran']['growth'] >= 0 ? 'up' : 'down' }} mr-1"></i>
-                                {{ $stats['pengaduan']['kritiksaran']['growth'] >= 0 ? '+' : '' }}{{ $stats['pengaduan']['kritiksaran']['growth'] }}%
-                                (hari ini)
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
+        </div>
 
-            <!-- Layanan Kegiatan -->
-            <div class="mb-8">
-                <h4 class="font-semibold text-gray-700 mb-4 flex items-center">
+        <!-- Detail Kegiatan -->
+        <div class="bg-white rounded-lg shadow">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-semibold text-gray-900 flex items-center">
                     <i class="fas fa-tasks text-purple-500 mr-2"></i>
-                    Layanan Kegiatan
-                </h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <!-- Magang -->
+                    Detail Layanan Kegiatan
+                    <span class="category-badge category-badge-kegiatan ml-2">4 Jenis</span>
+                </h3>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-2 gap-4">
+                    @foreach($stats['kegiatan']['details'] as $key => $detail)
                     <div class="border rounded-lg p-4 hover:shadow-md transition-shadow bg-purple-50">
-                        <div class="flex items-center justify-between">
-                            <h4 class="font-medium text-gray-700">Magang</h4>
-                            <span
-                                class="text-xs px-2 py-1 bg-purple-100 text-purple-800 rounded-full">{{ $stats['kegiatan']['magang']['total'] }}</span>
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="font-medium text-gray-700 capitalize">
+                                @if($key == 'magang')
+                                    Magang
+                                @elseif($key == 'tat')
+                                    TAT
+                                @elseif($key == 'sosialisasi')
+                                    Sosialisasi
+                                @elseif($key == 'tes_urine')
+                                    Tes Urine
+                                @endif
+                            </h4>
+                            <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                                {{ $detail['total'] }}
+                            </span>
                         </div>
-                        <div class="mt-2 text-sm text-gray-600 space-y-1">
-                            <div>Hari ini: <strong>{{ $stats['kegiatan']['magang']['today'] }}</strong></div>
-                            <div>Minggu ini: <strong>{{ $stats['kegiatan']['magang']['week'] }}</strong></div>
-                            <div>Bulan ini: <strong>{{ $stats['kegiatan']['magang']['month'] }}</strong></div>
-                            <div
-                                class="text-xs {{ $stats['kegiatan']['magang']['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }} mt-1">
-                                <i
-                                    class="fas fa-arrow-{{ $stats['kegiatan']['magang']['growth'] >= 0 ? 'up' : 'down' }} mr-1"></i>
-                                {{ $stats['kegiatan']['magang']['growth'] >= 0 ? '+' : '' }}{{ $stats['kegiatan']['magang']['growth'] }}%
-                                (hari ini)
+                        <div class="text-sm text-gray-600 space-y-1">
+                            <div class="flex justify-between">
+                                <span>Hari ini:</span>
+                                <span class="font-medium">{{ $detail['today'] }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Bulan ini:</span>
+                                <span class="font-medium">{{ $detail['month'] }}</span>
+                            </div>
+                            <div class="text-xs {{ $detail['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }} text-right">
+                                <i class="fas fa-arrow-{{ $detail['growth'] >= 0 ? 'up' : 'down' }} mr-1"></i>
+                                {{ $detail['growth'] >= 0 ? '+' : '' }}{{ $detail['growth'] }}%
                             </div>
                         </div>
                     </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
 
-                    <!-- TAT -->
-                    <div class="border rounded-lg p-4 hover:shadow-md transition-shadow bg-purple-50">
-                        <div class="flex items-center justify-between">
-                            <h4 class="font-medium text-gray-700">TAT</h4>
-                            <span
-                                class="text-xs px-2 py-1 bg-purple-100 text-purple-800 rounded-full">{{ $stats['kegiatan']['tat']['total'] }}</span>
+    <!-- Detail Cards untuk PPID dan Rehabilitasi -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <!-- Detail PPID -->
+        <div class="bg-white rounded-lg shadow">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-semibold text-gray-900 flex items-center">
+                    <i class="fas fa-file-alt text-blue-500 mr-2"></i>
+                    Detail Layanan PPID
+                    <span class="category-badge category-badge-ppid ml-2">Informasi Publik</span>
+                </h3>
+            </div>
+            <div class="p-6">
+                <div class="space-y-4">
+                    <!-- Stats Overview -->
+                    <div class="grid grid-cols-3 gap-4 mb-4">
+                        <div class="text-center p-3 bg-blue-50 rounded-lg">
+                            <div class="text-2xl font-bold text-blue-600">{{ number_format($stats['ppid']['total']) }}</div>
+                            <div class="text-xs text-gray-500">Total</div>
                         </div>
-                        <div class="mt-2 text-sm text-gray-600 space-y-1">
-                            <div>Hari ini: <strong>{{ $stats['kegiatan']['tat']['today'] }}</strong></div>
-                            <div>Minggu ini: <strong>{{ $stats['kegiatan']['tat']['week'] }}</strong></div>
-                            <div>Bulan ini: <strong>{{ $stats['kegiatan']['tat']['month'] }}</strong></div>
-                            <div
-                                class="text-xs {{ $stats['kegiatan']['tat']['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }} mt-1">
-                                <i
-                                    class="fas fa-arrow-{{ $stats['kegiatan']['tat']['growth'] >= 0 ? 'up' : 'down' }} mr-1"></i>
-                                {{ $stats['kegiatan']['tat']['growth'] >= 0 ? '+' : '' }}{{ $stats['kegiatan']['tat']['growth'] }}%
-                                (hari ini)
-                            </div>
+                        <div class="text-center p-3 bg-blue-50 rounded-lg">
+                            <div class="text-2xl font-bold text-blue-600">{{ number_format($stats['ppid']['month']) }}</div>
+                            <div class="text-xs text-gray-500">Bulan Ini</div>
+                        </div>
+                        <div class="text-center p-3 bg-blue-50 rounded-lg">
+                            <div class="text-2xl font-bold text-blue-600">{{ number_format($stats['ppid']['today']) }}</div>
+                            <div class="text-xs text-gray-500">Hari Ini</div>
                         </div>
                     </div>
-
-                    <!-- Sosialisasi -->
-                    <div class="border rounded-lg p-4 hover:shadow-md transition-shadow bg-purple-50">
-                        <div class="flex items-center justify-between">
-                            <h4 class="font-medium text-gray-700">Sosialisasi</h4>
-                            <span
-                                class="text-xs px-2 py-1 bg-purple-100 text-purple-800 rounded-full">{{ $stats['kegiatan']['sosialisasi']['total'] }}</span>
+                    
+                    <!-- Growth Info -->
+                    <div class="p-3 bg-gray-50 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600">Pertumbuhan (hari ini):</span>
+                            <span class="text-sm {{ $stats['ppid']['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }}">
+                                <i class="fas fa-arrow-{{ $stats['ppid']['growth'] >= 0 ? 'up' : 'down' }} mr-1"></i>
+                                {{ $stats['ppid']['growth'] >= 0 ? '+' : '' }}{{ $stats['ppid']['growth'] }}%
+                            </span>
                         </div>
-                        <div class="mt-2 text-sm text-gray-600 space-y-1">
-                            <div>Hari ini: <strong>{{ $stats['kegiatan']['sosialisasi']['today'] }}</strong></div>
-                            <div>Minggu ini: <strong>{{ $stats['kegiatan']['sosialisasi']['week'] }}</strong></div>
-                            <div>Bulan ini: <strong>{{ $stats['kegiatan']['sosialisasi']['month'] }}</strong></div>
-                            <div
-                                class="text-xs {{ $stats['kegiatan']['sosialisasi']['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }} mt-1">
-                                <i
-                                    class="fas fa-arrow-{{ $stats['kegiatan']['sosialisasi']['growth'] >= 0 ? 'up' : 'down' }} mr-1"></i>
-                                {{ $stats['kegiatan']['sosialisasi']['growth'] >= 0 ? '+' : '' }}{{ $stats['kegiatan']['sosialisasi']['growth'] }}%
-                                (hari ini)
-                            </div>
+                        <div class="flex justify-between items-center mt-1">
+                            <span class="text-sm text-gray-600">Minggu ini:</span>
+                            <span class="text-sm font-medium">{{ number_format($stats['ppid']['week']) }} data</span>
                         </div>
                     </div>
-
-                    <!-- Tes Urine -->
-                    <div class="border rounded-lg p-4 hover:shadow-md transition-shadow bg-purple-50">
-                        <div class="flex items-center justify-between">
-                            <h4 class="font-medium text-gray-700">Tes Urine</h4>
-                            <span
-                                class="text-xs px-2 py-1 bg-purple-100 text-purple-800 rounded-full">{{ $stats['kegiatan']['tes_urine']['total'] }}</span>
-                        </div>
-                        <div class="mt-2 text-sm text-gray-600 space-y-1">
-                            <div>Hari ini: <strong>{{ $stats['kegiatan']['tes_urine']['today'] }}</strong></div>
-                            <div>Minggu ini: <strong>{{ $stats['kegiatan']['tes_urine']['week'] }}</strong></div>
-                            <div>Bulan ini: <strong>{{ $stats['kegiatan']['tes_urine']['month'] }}</strong></div>
-                            <div
-                                class="text-xs {{ $stats['kegiatan']['tes_urine']['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }} mt-1">
-                                <i
-                                    class="fas fa-arrow-{{ $stats['kegiatan']['tes_urine']['growth'] >= 0 ? 'up' : 'down' }} mr-1"></i>
-                                {{ $stats['kegiatan']['tes_urine']['growth'] >= 0 ? '+' : '' }}{{ $stats['kegiatan']['tes_urine']['growth'] }}%
-                                (hari ini)
-                            </div>
-                        </div>
+                    
+                    <!-- Quick Info -->
+                    <div class="p-3 bg-blue-50 rounded-lg">
+                        <p class="text-sm text-blue-700">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            Layanan Permohonan Informasi Publik sesuai UU KIP
+                        </p>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Layanan Lainnya -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- PPID -->
-                <div class="border rounded-lg p-4 hover:shadow-md transition-shadow bg-blue-50">
-                    <h4 class="font-semibold text-gray-700 mb-3 flex items-center">
-                        <i class="fas fa-file-alt text-blue-500 mr-2"></i>
-                        Layanan PPID
-                    </h4>
-                    <div class="space-y-2">
-                        <div class="flex justify-between">
-                            <span>Total:</span>
-                            <strong>{{ $stats['ppid']['total'] }}</strong>
+        <!-- Detail Rehabilitasi -->
+        <div class="bg-white rounded-lg shadow">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-semibold text-gray-900 flex items-center">
+                    <i class="fas fa-heartbeat text-green-500 mr-2"></i>
+                    Detail Layanan Rehabilitasi
+                    <span class="category-badge category-badge-rehabilitasi ml-2">Kesehatan</span>
+                </h3>
+            </div>
+            <div class="p-6">
+                <div class="space-y-4">
+                    <!-- Stats Overview -->
+                    <div class="grid grid-cols-3 gap-4 mb-4">
+                        <div class="text-center p-3 bg-green-50 rounded-lg">
+                            <div class="text-2xl font-bold text-green-600">{{ number_format($stats['rehabilitasi']['total']) }}</div>
+                            <div class="text-xs text-gray-500">Total</div>
                         </div>
-                        <div class="flex justify-between">
-                            <span>Hari ini:</span>
-                            <strong>{{ $stats['ppid']['today'] }}</strong>
+                        <div class="text-center p-3 bg-green-50 rounded-lg">
+                            <div class="text-2xl font-bold text-green-600">{{ number_format($stats['rehabilitasi']['month']) }}</div>
+                            <div class="text-xs text-gray-500">Bulan Ini</div>
                         </div>
-                        <div class="flex justify-between">
-                            <span>Minggu ini:</span>
-                            <strong>{{ $stats['ppid']['week'] }}</strong>
-                        </div>
-                        <div class="flex justify-between">
-                            <span>Bulan ini:</span>
-                            <strong>{{ $stats['ppid']['month'] }}</strong>
-                        </div>
-                        <div
-                            class="text-xs {{ $stats['ppid']['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }} text-right">
-                            <i class="fas fa-arrow-{{ $stats['ppid']['growth'] >= 0 ? 'up' : 'down' }} mr-1"></i>
-                            {{ $stats['ppid']['growth'] >= 0 ? '+' : '' }}{{ $stats['ppid']['growth'] }}% (hari ini)
+                        <div class="text-center p-3 bg-green-50 rounded-lg">
+                            <div class="text-2xl font-bold text-green-600">{{ number_format($stats['rehabilitasi']['today']) }}</div>
+                            <div class="text-xs text-gray-500">Hari Ini</div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Rehabilitasi -->
-                <div class="border rounded-lg p-4 hover:shadow-md transition-shadow bg-green-50">
-                    <h4 class="font-semibold text-gray-700 mb-3 flex items-center">
-                        <i class="fas fa-heartbeat text-green-500 mr-2"></i>
-                        Rehabilitasi
-                    </h4>
-                    <div class="space-y-2">
-                        <div class="flex justify-between">
-                            <span>Total:</span>
-                            <strong>{{ $stats['rehabilitasi']['total'] }}</strong>
+                    
+                    <!-- Growth Info -->
+                    <div class="p-3 bg-gray-50 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600">Pertumbuhan (hari ini):</span>
+                            <span class="text-sm {{ $stats['rehabilitasi']['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }}">
+                                <i class="fas fa-arrow-{{ $stats['rehabilitasi']['growth'] >= 0 ? 'up' : 'down' }} mr-1"></i>
+                                {{ $stats['rehabilitasi']['growth'] >= 0 ? '+' : '' }}{{ $stats['rehabilitasi']['growth'] }}%
+                            </span>
                         </div>
-                        <div class="flex justify-between">
-                            <span>Hari ini:</span>
-                            <strong>{{ $stats['rehabilitasi']['today'] }}</strong>
+                        <div class="flex justify-between items-center mt-1">
+                            <span class="text-sm text-gray-600">Minggu ini:</span>
+                            <span class="text-sm font-medium">{{ number_format($stats['rehabilitasi']['week']) }} data</span>
                         </div>
-                        <div class="flex justify-between">
-                            <span>Minggu ini:</span>
-                            <strong>{{ $stats['rehabilitasi']['week'] }}</strong>
-                        </div>
-                        <div class="flex justify-between">
-                            <span>Bulan ini:</span>
-                            <strong>{{ $stats['rehabilitasi']['month'] }}</strong>
-                        </div>
-                        <div
-                            class="text-xs {{ $stats['rehabilitasi']['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }} text-right">
-                            <i class="fas fa-arrow-{{ $stats['rehabilitasi']['growth'] >= 0 ? 'up' : 'down' }} mr-1"></i>
-                            {{ $stats['rehabilitasi']['growth'] >= 0 ? '+' : '' }}{{ $stats['rehabilitasi']['growth'] }}%
-                            (hari ini)
-                        </div>
+                    </div>
+                    
+                    <!-- Quick Info -->
+                    <div class="p-3 bg-green-50 rounded-lg">
+                        <p class="text-sm text-green-700">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            Layanan rehabilitasi untuk penyembuhan ketergantungan narkoba
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Welcome Section -->
+    <!-- Quick Stats Overview -->
+    <div class="bg-white rounded-lg shadow mb-6">
+        <div class="px-6 py-4 border-b border-gray-200">
+            <h3 class="text-lg font-semibold text-gray-900">Ringkasan Harian</h3>
+        </div>
+        <div class="p-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="text-center p-4 bg-red-50 rounded-lg">
+                    <div class="text-2xl font-bold text-red-600">{{ number_format($stats['pengaduan']['today']) }}</div>
+                    <div class="text-sm text-gray-500">Pengaduan Hari Ini</div>
+                    <div class="text-xs {{ $stats['pengaduan']['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }}">
+                        {{ $stats['pengaduan']['growth'] >= 0 ? '+' : '' }}{{ $stats['pengaduan']['growth'] }}%
+                    </div>
+                </div>
+                <div class="text-center p-4 bg-blue-50 rounded-lg">
+                    <div class="text-2xl font-bold text-blue-600">{{ number_format($stats['ppid']['today']) }}</div>
+                    <div class="text-sm text-gray-500">PPID Hari Ini</div>
+                    <div class="text-xs {{ $stats['ppid']['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }}">
+                        {{ $stats['ppid']['growth'] >= 0 ? '+' : '' }}{{ $stats['ppid']['growth'] }}%
+                    </div>
+                </div>
+                <div class="text-center p-4 bg-green-50 rounded-lg">
+                    <div class="text-2xl font-bold text-green-600">{{ number_format($stats['rehabilitasi']['today']) }}</div>
+                    <div class="text-sm text-gray-500">Rehabilitasi Hari Ini</div>
+                    <div class="text-xs {{ $stats['rehabilitasi']['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }}">
+                        {{ $stats['rehabilitasi']['growth'] >= 0 ? '+' : '' }}{{ $stats['rehabilitasi']['growth'] }}%
+                    </div>
+                </div>
+                <div class="text-center p-4 bg-purple-50 rounded-lg">
+                    <div class="text-2xl font-bold text-purple-600">{{ number_format($stats['kegiatan']['today']) }}</div>
+                    <div class="text-sm text-gray-500">Kegiatan Hari Ini</div>
+                    <div class="text-xs {{ $stats['kegiatan']['growth'] >= 0 ? 'growth-positive' : 'growth-negative' }}">
+                        {{ $stats['kegiatan']['growth'] >= 0 ? '+' : '' }}{{ $stats['kegiatan']['growth'] }}%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Welcome Card -->
     <div class="bg-white rounded-lg shadow">
         <div class="px-6 py-4 border-b border-gray-200">
             <h3 class="text-lg font-semibold text-gray-900">Selamat Datang di Admin SITERKENAL</h3>
         </div>
         <div class="p-6">
-            <p class="text-gray-600">Halo <strong>{{ Auth::guard('admin')->user()->name }}</strong>, selamat datang di
-                panel administrator SITERKENAL.</p>
-            <p class="text-gray-600 mt-2">Anda login sebagai: <span
-                    class="bg-blue-100 text-blue-800 px-2 py-1 rounded">{{ Auth::guard('admin')->user()->role }}</span>
+            <p class="text-gray-600 mb-4">
+                Halo <strong>{{ Auth::guard('admin')->user()->name ?? 'Admin' }}</strong>, 
+                selamat datang di panel administrator SITERKENAL. Sistem ini mengelola 4 layanan utama:
             </p>
-
-            <!-- Quick Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6 p-4 bg-gray-50 rounded-lg">
-                <div class="text-center">
-                    <div class="text-2xl font-bold text-blue-600">{{ number_format($totalAllLayanan) }}</div>
-                    <div class="text-sm text-gray-500">Total Semua Layanan</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-2xl font-bold text-green-600">
-                        {{ number_format(
-                            $stats['ppid']['month'] +
-                                $stats['rehabilitasi']['month'] +
-                                $stats['kegiatan']['magang']['month'] +
-                                $stats['kegiatan']['tat']['month'] +
-                                $stats['kegiatan']['sosialisasi']['month'] +
-                                $stats['kegiatan']['tes_urine']['month'] +
-                                $stats['pengaduan']['gratifikasi']['month'] +
-                                $stats['pengaduan']['whistleblowing']['month'] +
-                                $stats['pengaduan']['narkoba']['month'] +
-                                $stats['pengaduan']['kritiksaran']['month'],
-                        ) }}
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                <div class="text-center p-4 border rounded-lg">
+                    <div class="inline-flex items-center justify-center w-12 h-12 mb-2 bg-red-100 rounded-full">
+                        <i class="fas fa-exclamation-triangle text-red-600"></i>
                     </div>
-                    <div class="text-sm text-gray-500">Bulan Ini</div>
+                    <h4 class="font-medium text-gray-900">Pengaduan</h4>
+                    <p class="text-sm text-gray-500">4 jenis pengaduan masyarakat</p>
                 </div>
-                <div class="text-center">
-                    <div class="text-2xl font-bold text-purple-600">
-                        {{ number_format(
-                            $stats['ppid']['week'] +
-                                $stats['rehabilitasi']['week'] +
-                                $stats['kegiatan']['magang']['week'] +
-                                $stats['kegiatan']['tat']['week'] +
-                                $stats['kegiatan']['sosialisasi']['week'] +
-                                $stats['kegiatan']['tes_urine']['week'] +
-                                $stats['pengaduan']['gratifikasi']['week'] +
-                                $stats['pengaduan']['whistleblowing']['week'] +
-                                $stats['pengaduan']['narkoba']['week'] +
-                                $stats['pengaduan']['kritiksaran']['week'],
-                        ) }}
+                <div class="text-center p-4 border rounded-lg">
+                    <div class="inline-flex items-center justify-center w-12 h-12 mb-2 bg-blue-100 rounded-full">
+                        <i class="fas fa-file-alt text-blue-600"></i>
                     </div>
-                    <div class="text-sm text-gray-500">Minggu Ini</div>
+                    <h4 class="font-medium text-gray-900">PPID</h4>
+                    <p class="text-sm text-gray-500">Layanan informasi publik</p>
                 </div>
-                <div class="text-center">
-                    <div class="text-2xl font-bold text-orange-600">
-                        {{ number_format(
-                            $stats['ppid']['today'] +
-                                $stats['rehabilitasi']['today'] +
-                                $stats['kegiatan']['magang']['today'] +
-                                $stats['kegiatan']['tat']['today'] +
-                                $stats['kegiatan']['sosialisasi']['today'] +
-                                $stats['kegiatan']['tes_urine']['today'] +
-                                $stats['pengaduan']['gratifikasi']['today'] +
-                                $stats['pengaduan']['whistleblowing']['today'] +
-                                $stats['pengaduan']['narkoba']['today'] +
-                                $stats['pengaduan']['kritiksaran']['today'],
-                        ) }}
+                <div class="text-center p-4 border rounded-lg">
+                    <div class="inline-flex items-center justify-center w-12 h-12 mb-2 bg-green-100 rounded-full">
+                        <i class="fas fa-heartbeat text-green-600"></i>
                     </div>
-                    <div class="text-sm text-gray-500">Hari Ini</div>
+                    <h4 class="font-medium text-gray-900">Rehabilitasi</h4>
+                    <p class="text-sm text-gray-500">Pemulihan kesehatan</p>
+                </div>
+                <div class="text-center p-4 border rounded-lg">
+                    <div class="inline-flex items-center justify-center w-12 h-12 mb-2 bg-purple-100 rounded-full">
+                        <i class="fas fa-tasks text-purple-600"></i>
+                    </div>
+                    <h4 class="font-medium text-gray-900">Kegiatan</h4>
+                    <p class="text-sm text-gray-500">4 jenis kegiatan</p>
                 </div>
             </div>
         </div>
@@ -631,123 +487,120 @@
 @endsection
 
 @push('scripts')
-<!-- Load Chart.js langsung di sini -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
-    // Tunggu Chart.js selesai load
-    window.addEventListener('load', function() {
-        console.log('✅ Page fully loaded');
-        console.log('✅ Chart.js version:', Chart?.version);
+    // Pastikan Chart.js sudah terload
+    console.log('Chart.js loaded:', typeof Chart !== 'undefined');
+    
+    // Data dari controller untuk JavaScript
+    const chartData = @json($chartData);
+    
+    console.log('Chart data loaded:', chartData);
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM loaded, initializing charts...');
         
-        initializeAllCharts();
+        // Inisialisasi charts
+        initTotalChart();
+        initMonthlyChart();
     });
-
-    function initializeAllCharts() {
-        console.log('🔄 Initializing charts...');
+    
+    function initTotalChart() {
+        const ctx = document.getElementById('totalChart');
+        if (!ctx) {
+            console.error('Total chart canvas not found');
+            return;
+        }
         
-        // Chart 1: Monthly Trend
-        const ctx1 = document.getElementById('monthlyTrendChart');
-        if (ctx1) {
-            console.log('📊 Monthly chart canvas found');
-            createMonthlyChart(ctx1);
-        } else {
-            console.error('❌ Monthly chart canvas NOT found');
-        }
-
-        // Chart 2: Category Distribution
-        const ctx2 = document.getElementById('categoryChart');
-        if (ctx2) {
-            console.log('📊 Category chart canvas found');
-            createCategoryChart(ctx2);
-        }
-
-        // Chart 3: Yearly Comparison
-        const ctx3 = document.getElementById('yearlyComparisonChart');
-        if (ctx3) {
-            console.log('📊 Yearly chart canvas found');
-            createYearlyChart(ctx3);
-        }
-    }
-
-    function createMonthlyChart(ctx) {
         try {
-            const data = {
-                labels: {!! json_encode($allTimeData['labels'] ?? ['Jan', 'Feb', 'Mar']) !!},
-                datasets: [
-                    {
-                        label: 'Pengaduan',
-                        data: {!! json_encode($allTimeData['datasets']['pengaduan'] ?? [10, 20, 30]) !!},
-                        backgroundColor: '#EF4444',
-                        borderColor: '#DC2626',
-                        borderWidth: 1
+            // Destroy existing chart if any
+            if (window.totalChartInstance) {
+                window.totalChartInstance.destroy();
+            }
+            
+            window.totalChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: chartData.total,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.parsed.y.toLocaleString('id-ID')}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return value.toLocaleString('id-ID');
+                                }
+                            }
+                        }
                     }
-                ]
-            };
-
-            new Chart(ctx, {
-                type: 'bar',
-                data: data,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false
                 }
             });
-            console.log('✅ Monthly chart created');
+            
+            console.log('✅ Total chart initialized');
         } catch (error) {
-            console.error('❌ Monthly chart error:', error);
+            console.error('❌ Error initializing total chart:', error);
         }
     }
-
-    function createCategoryChart(ctx) {
+    
+    function initMonthlyChart() {
+        const ctx = document.getElementById('monthlyChart');
+        if (!ctx) {
+            console.error('Monthly chart canvas not found');
+            return;
+        }
+        
         try {
-            const data = {
-                labels: {!! json_encode($categoryDistribution['labels'] ?? ['A', 'B', 'C']) !!},
-                datasets: [{
-                    data: {!! json_encode($categoryDistribution['data'] ?? [10, 20, 30]) !!},
-                    backgroundColor: {!! json_encode($categoryDistribution['colors'] ?? ['#EF4444', '#3B82F6', '#10B981']) !!},
-                    borderWidth: 2
-                }]
-            };
-
-            new Chart(ctx, {
+            // Destroy existing chart if any
+            if (window.monthlyChartInstance) {
+                window.monthlyChartInstance.destroy();
+            }
+            
+            window.monthlyChartInstance = new Chart(ctx, {
                 type: 'doughnut',
-                data: data,
+                data: chartData.monthly,
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'right',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed || 0;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
+                                    return `${label}: ${value.toLocaleString('id-ID')} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
                 }
             });
-            console.log('✅ Category chart created');
+            
+            console.log('✅ Monthly chart initialized');
         } catch (error) {
-            console.error('❌ Category chart error:', error);
-        }
-    }
-
-    function createYearlyChart(ctx) {
-        try {
-            const data = {
-                labels: {!! json_encode($yearlyComparison['labels'] ?? ['2024', '2025']) !!},
-                datasets: [{
-                    label: 'Data',
-                    data: {!! json_encode($yearlyComparison['currentYear'] ?? [100, 150]) !!},
-                    backgroundColor: '#3B82F6',
-                    borderColor: '#1D4ED8',
-                    borderWidth: 1
-                }]
-            };
-
-            new Chart(ctx, {
-                type: 'bar',
-                data: data,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false
-                }
-            });
-            console.log('✅ Yearly chart created');
-        } catch (error) {
-            console.error('❌ Yearly chart error:', error);
+            console.error('❌ Error initializing monthly chart:', error);
         }
     }
 </script>
